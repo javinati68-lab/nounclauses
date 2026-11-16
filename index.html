@@ -1,0 +1,3239 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mr. Rocha’s English Class: Noun Clauses</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* Base Typography & Smooth Scrolling */
+    html {
+      scroll-behavior: smooth;
+      font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    /* Shiny Blue Border Requirement for Answer Boxes, Name, Date */
+    .shiny-blue-box {
+      border: 2px solid #0ea5e9 !important;
+      box-shadow: 0 0 12px rgba(14, 165, 233, 0.45), inset 0 0 4px rgba(56, 189, 248, 0.15) !important;
+      transition: all 0.2s ease;
+    }
+
+    .shiny-blue-box:focus,
+    .shiny-blue-box:focus-within {
+      border-color: #38bdf8 !important;
+      box-shadow: 0 0 18px rgba(14, 165, 233, 0.75), 0 0 4px rgba(125, 211, 252, 0.6) !important;
+      outline: none !important;
+    }
+
+    /* Locked state after Check Answers */
+    .locked-input {
+      opacity: 0.88;
+      cursor: not-allowed !important;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #0ea5e9;
+      border-radius: 9999px;
+    }
+
+    /* Puzzle & Word Tile Drag Styling */
+    .puzzle-slot {
+      aspect-ratio: 1 / 1;
+      touch-action: manipulation;
+      user-select: none;
+    }
+    .puzzle-piece {
+      touch-action: manipulation;
+      user-select: none;
+      cursor: grab;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+    }
+    .puzzle-piece:active {
+      cursor: grabbing;
+      transform: scale(1.04);
+    }
+    .word-tile {
+      touch-action: manipulation;
+      user-select: none;
+      cursor: grab;
+      transition: transform 0.12s ease, background-color 0.15s ease;
+    }
+    .word-tile:active {
+      cursor: grabbing;
+      transform: scale(1.05);
+    }
+
+    /* Print Styles: Start cleanly at the very top of the page */
+    @media print {
+      @page {
+        margin: 0.45in;
+        size: auto;
+      }
+      html, body {
+        background: #ffffff !important;
+        color: #0f172a !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        height: auto !important;
+        overflow: visible !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      #app-header,
+      #section-nav-pills,
+      .activity-section {
+        display: none !important;
+      }
+      #results-section {
+        display: block !important;
+        position: static !important;
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+        background: #ffffff !important;
+        color: #0f172a !important;
+      }
+      #results-section * {
+        color-adjust: exact !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col">
+
+  <!-- TOP STICKY HEADER WITH PROGRESS BAR, DARK/LIGHT TOGGLE, AND SUBMIT BUTTON -->
+  <header id="app-header" class="sticky top-0 z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm no-print">
+    <div class="max-w-6xl mx-auto px-3 sm:px-6 py-3">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <!-- Title & Class Badge -->
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-500 to-indigo-600 flex items-center justify-center text-white font-extrabold text-lg shadow-md shrink-0">
+            MR
+          </div>
+          <div>
+            <h1 class="text-base sm:text-xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
+              Mr. Rocha’s English Class: <span class="text-sky-600 dark:text-sky-400">Noun Clauses</span>
+            </h1>
+            <p class="text-xs text-slate-500 dark:text-slate-400 hidden sm:block">Interactive Grammar, Listening, Reading &amp; Comprehension Worksheet</p>
+          </div>
+        </div>
+
+        <!-- Action Controls: Dark/Light Toggle + Submit Button -->
+        <div class="flex items-center gap-2">
+          <button
+            id="theme-toggle-btn"
+            type="button"
+            onclick="toggleTheme()"
+            aria-label="Toggle Dark or Light Mode"
+            class="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700 transition shadow-sm"
+          >
+            <!-- Sun Icon (shown in dark mode) -->
+            <svg id="icon-sun" class="w-4 h-4 text-amber-400 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="5"></circle>
+              <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+            </svg>
+            <!-- Moon Icon (shown in light mode) -->
+            <svg id="icon-moon" class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+            </svg>
+            <span id="theme-label">Dark Mode</span>
+          </button>
+
+          <button
+            type="button"
+            onclick="submitWorksheet()"
+            class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white shadow-md hover:shadow-lg transition"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>Submit Worksheet</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="mt-2.5">
+        <div class="flex justify-between items-center text-xs font-semibold mb-1">
+          <span class="text-slate-600 dark:text-slate-300" id="progress-status-text">Worksheet Progress: Introduction</span>
+          <span class="text-sky-600 dark:text-sky-400 font-bold" id="progress-percent-text">0% Completed</span>
+        </div>
+        <div class="w-full h-2.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+          <div
+            id="progress-bar-fill"
+            class="h-full bg-gradient-to-r from-sky-500 via-indigo-500 to-emerald-500 rounded-full transition-all duration-500"
+            style="width: 5%;"
+          ></div>
+        </div>
+      </div>
+
+      <!-- Quick Step Navigation Pills -->
+      <nav id="section-nav-pills" class="mt-2.5 flex items-center gap-1.5 overflow-x-auto pb-1 no-print" aria-label="Activity Navigation">
+        <!-- Populated dynamically by JS -->
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN WORKSHEET CONTAINER -->
+  <main class="flex-1 max-w-5xl w-full mx-auto px-3 sm:px-6 py-6">
+
+    <!-- =================================================================== -->
+    <!-- SECTION 0: INTRODUCTION (Student Name, Calendar Date, Image1 Only)  -->
+    <!-- =================================================================== -->
+    <section id="section-0" class="activity-section bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-800 p-5 sm:p-8">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-800 pb-4 mb-6">
+        <div>
+          <span class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-sky-100 text-sky-700 dark:bg-sky-900/50 dark:text-sky-300 mb-1">
+            Welcome &amp; Student Information
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
+            Introduction to Noun Clauses
+          </h2>
+        </div>
+      </div>
+
+      <!-- Student Name and Dropdown Calendar -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+        <div>
+          <label for="student-name" class="block text-sm font-bold text-slate-700 dark:text-slate-200 mb-2">
+            Student Full Name <span class="text-rose-500">*</span>
+          </label>
+          <input
+            type="text"
+            id="student-name"
+            placeholder="Type your full name here..."
+            oninput="updateProgress()"
+            class="shiny-blue-box w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 font-medium text-base"
+          />
+        </div>
+
+        <div>
+          <label for="student-date" class="block text-sm font-bold text-slate-700 dark:text-slate-200 mb-2">
+            Select Date (Dropdown Calendar) <span class="text-rose-500">*</span>
+          </label>
+          <input
+            type="date"
+            id="student-date"
+            onchange="updateProgress()"
+            class="shiny-blue-box w-full px-4 py-3 rounded-xl bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-medium text-base"
+          />
+        </div>
+      </div>
+
+      <!-- Introduction Instructions -->
+      <div class="bg-sky-50/70 dark:bg-slate-800/70 border border-sky-200 dark:border-slate-700 rounded-xl p-4 sm:p-5 mb-6">
+        <h3 class="font-bold text-base sm:text-lg text-sky-900 dark:text-sky-300 mb-1.5">Instructions for Students:</h3>
+        <ul class="list-disc list-inside space-y-1 text-sm sm:text-base text-slate-700 dark:text-slate-300">
+          <li>Enter your <strong>Name</strong> and choose today’s <strong>Date</strong> from the dropdown calendar above.</li>
+          <li>Complete all <strong>7 interactive activities</strong> step by step using the <em>Next Activity</em> and <em>Previous Activity</em> buttons.</li>
+          <li>Click <strong>Check Answers</strong> inside each activity to see immediate feedback. Once checked, your answers for that activity are locked.</li>
+          <li>Click <strong>Submit Worksheet</strong> at any time to view your detailed scores, colorful charts, personalized recommendations, and printable report.</li>
+        </ul>
+      </div>
+
+      <!-- Image1 (ONLY SHOWN IN INTRODUCTION) -->
+      <div class="rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 p-2 sm:p-3">
+        <img
+          id="image1-el"
+          src="Image1.jpg"
+          alt="Mr. Rocha's English Class - Noun Clauses Introduction Banner"
+          data-base="Image1"
+          onerror="handleImageFallback(this, 'Welcome to Mr. Rocha’s English Class: Noun Clauses')"
+          class="w-full h-auto max-h-[65vh] object-contain rounded-xl mx-auto block"
+        />
+      </div>
+
+      <!-- Bottom Navigation -->
+      <div class="mt-8 pt-5 border-t border-slate-200 dark:border-slate-800 flex justify-between items-center">
+        <span class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium">Step 1 of 8 • Introduction</span>
+        <button
+          type="button"
+          onclick="goToSection(1)"
+          class="flex items-center gap-2 px-5 py-3 rounded-xl font-bold text-sm sm:text-base bg-sky-600 hover:bg-sky-700 text-white shadow-md transition"
+        >
+          <span>Start Activity 1</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- ACTIVITY 1: WATCH THE VIDEO AND TELL MR. ROCHA ABOUT IT             -->
+    <!-- =================================================================== -->
+    <section id="section-1" class="activity-section hidden bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-800 p-5 sm:p-8">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-800 pb-4 mb-5">
+        <div>
+          <span class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300 mb-1">
+            Activity 1 of 7 • Video Comprehension
+          </span>
+          <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
+            Watch the Video. Tell Mr. Rocha about the video.
+          </h2>
+        </div>
+        <span id="badge-act1" class="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+          Not Checked
+        </span>
+      </div>
+
+      <!-- Full-width responsive Video1 container -->
+      <div class="w-full rounded-2xl overflow-hidden bg-black border border-slate-300 dark:border-slate-700 shadow-inner mb-6">
+        <video
+          id="video1-player"
+          controls
+          playsinline
+          preload="metadata"
+          class="w-full h-auto max-h-[72vh] object-contain block mx-auto"
+        >
+          <source src="Video1.mp4" type="video/mp4" />
+          <source src="Video1.webm" type="video/webm" />
+          <source src="Video1.mov" type="video/quicktime" />
+          Your browser does not support the HTML5 video tag. Please ensure Video1.mp4 is in the same folder.
+        </video>
+        <div id="video1-fallback-msg" class="hidden p-6 text-center text-slate-200 bg-slate-900">
+          <p class="font-bold text-base mb-1">Video1 File Notice</p>
+          <p class="text-sm text-slate-400">Place <code class="text-sky-400">Video1.mp4</code> in the same folder as this HTML file to play the video directly. You can still write your reflection below!</p>
+        </div>
+      </div>
+
+      <!-- Response Box -->
+      <div class="mb-4">
+        <label for="act1-response" class="block text-sm sm:text-base font-bold text-slate-800 dark:text-slate-200 mb-2">
+          Your Summary for Mr. Rocha <span class="text-xs font-normal text-slate-500 dark:text-slate-400">(Tip: Try using noun clauses like "I learned that...", "What stood out to me was...", "The speaker explained why...")</span>
+        </label>
+        <textarea
+          id="act1-response"
+          rows="5"
+          oninput="updateProgress()"
+          placeholder="Write at least 2-3 complete sentences telling Mr. Rocha what the video is about..."
+          class="shiny-blue-box w-full p-4 rounded-xl bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 text-base leading-relaxed"
+        ></textarea>
+      </div>
+
+      <!-- Check Answers Button & Feedback -->
+      <div class="flex flex-wrap items-center gap-3">
+        <button
+          id="check-btn-1"
+          type="button"
+          onclick="checkActivity1()"
+          class="px-5 py-2.5 rounded-xl font-bold text-sm sm:text-base bg-indigo-600 hover:bg-indigo-700 text-white shadow transition"
+        >
+          Check Answers
+        </button>
+      </div>
+      <div id="feedback-act1" class="hidden mt-4 p-4 rounded-xl text-sm sm:text-base font-medium"></div>
+
+      <!-- Previous / Next Navigation -->
+      <div class="mt-8 pt-5 border-t border-slate-200 dark:border-slate-800 flex justify-between items-center gap-3">
+        <button
+          type="button"
+          onclick="goToSection(0)"
+          class="flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-sm sm:text-base border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700 transition"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
+          </svg>
+          <span>Previous</span>
+        </button>
+
+        <button
+          type="button"
+          onclick="goToSection(2)"
+          class="flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm sm:text-base bg-sky-600 hover:bg-sky-700 text-white shadow-md transition"
+        >
+          <span>Next Activity</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- ACTIVITY 2: READ THE STORY (IMAGE2) AND TELL MR. ROCHA ABOUT IT     -->
+    <!-- =================================================================== -->
+    <section id="section-2" class="activity-section hidden bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-800 p-5 sm:p-8">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-800 pb-4 mb-5">
+        <div>
+          <span class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-purple-100 text-purple-700 dark:bg-purple-900/50 dark:text-purple-300 mb-1">
+            Activity 2 of 7 • Visual Story Reading
+          </span>
+          <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
+            Read the story. Tell Mr. Rocha what it is about.
+          </h2>
+        </div>
+        <span id="badge-act2" class="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+          Not Checked
+        </span>
+      </div>
+
+      <!-- Full-width Image2 display -->
+      <div class="w-full rounded-2xl overflow-hidden border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 p-2 sm:p-3 mb-6">
+        <img
+          id="image2-el"
+          src="Image2.jpg"
+          alt="Story Image 2 for Reading Activity"
+          data-base="Image2"
+          onerror="handleImageFallback(this, 'Story Image (Image2.jpg) — Read the story carefully and summarize what happens.')"
+          class="w-full h-auto object-contain rounded-xl mx-auto block"
+        />
+      </div>
+
+      <!-- Response Box -->
+      <div class="mb-4">
+        <label for="act2-response" class="block text-sm sm:text-base font-bold text-slate-800 dark:text-slate-200 mb-2">
+          Tell Mr. Rocha what the story is about <span class="text-xs font-normal text-slate-500 dark:text-slate-400">(Tip: Use noun clauses such as "The story shows how...", "I understood that...", "What happened in the end was...")</span>
+        </label>
+        <textarea
+          id="act2-response"
+          rows="5"
+          oninput="updateProgress()"
+          placeholder="Write at least 2-3 complete sentences summarizing the story for Mr. Rocha..."
+          class="shiny-blue-box w-full p-4 rounded-xl bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 text-base leading-relaxed"
+        ></textarea>
+      </div>
+
+      <!-- Check Answers Button & Feedback -->
+      <div class="flex flex-wrap items-center gap-3">
+        <button
+          id="check-btn-2"
+          type="button"
+          onclick="checkActivity2()"
+          class="px-5 py-2.5 rounded-xl font-bold text-sm sm:text-base bg-purple-600 hover:bg-purple-700 text-white shadow transition"
+        >
+          Check Answers
+        </button>
+      </div>
+      <div id="feedback-act2" class="hidden mt-4 p-4 rounded-xl text-sm sm:text-base font-medium"></div>
+
+      <!-- Previous / Next Navigation -->
+      <div class="mt-8 pt-5 border-t border-slate-200 dark:border-slate-800 flex justify-between items-center gap-3">
+        <button
+          type="button"
+          onclick="goToSection(1)"
+          class="flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-sm sm:text-base border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700 transition"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
+          </svg>
+          <span>Previous Activity</span>
+        </button>
+
+        <button
+          type="button"
+          onclick="goToSection(3)"
+          class="flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm sm:text-base bg-sky-600 hover:bg-sky-700 text-white shadow-md transition"
+        >
+          <span>Next Activity</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- ACTIVITY 3: GRAMMAR GUIDE + 20 NOUN CLAUSE SENTENCE COMPLETIONS     -->
+    <!-- =================================================================== -->
+    <section id="section-3" class="activity-section hidden bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-800 p-5 sm:p-8">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-800 pb-4 mb-6">
+        <div>
+          <span class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-sky-100 text-sky-700 dark:bg-sky-900/50 dark:text-sky-300 mb-1">
+            Activity 3 of 7 • Grammar Explanation &amp; Practice
+          </span>
+          <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
+            Mastering Noun Clauses (20 Practice Sentences)
+          </h2>
+        </div>
+        <span id="badge-act3" class="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+          Not Checked
+        </span>
+      </div>
+
+      <!-- Complete Explanation Box -->
+      <div class="bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 sm:p-6 mb-7 space-y-4">
+        <h3 class="text-lg sm:text-xl font-extrabold text-sky-700 dark:text-sky-400 flex items-center gap-2">
+          <span>📘 What is a Noun Clause?</span>
+        </h3>
+        <p class="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed">
+          A <strong>noun clause</strong> is a dependent clause (containing its own <strong>subject</strong> and <strong>verb</strong>) that functions just like a single noun in a sentence. It can act as a <strong>subject</strong>, <strong>direct object</strong>, <strong>subject complement</strong>, or <strong>object of a preposition</strong>.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+          <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+            <h4 class="font-bold text-slate-900 dark:text-white mb-1.5">1. Common Noun Clause Markers</h4>
+            <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+              <span class="font-semibold text-sky-600 dark:text-sky-400">Statements:</span> <em>that</em><br/>
+              <span class="font-semibold text-indigo-600 dark:text-indigo-400">Wh- Words:</span> <em>what, whatever, who, whoever, whom, whose, which, whichever, when, where, why, how</em><br/>
+              <span class="font-semibold text-emerald-600 dark:text-emerald-400">Yes/No Questions:</span> <em>whether, if</em>
+            </p>
+          </div>
+
+          <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+            <h4 class="font-bold text-slate-900 dark:text-white mb-1.5">2. Golden Rule: Statement Word Order</h4>
+            <p class="text-slate-600 dark:text-slate-300 leading-relaxed">
+              Always use <strong>Subject + Verb</strong> order inside a noun clause—never question inversion!<br/>
+              <span class="text-rose-600 dark:text-rose-400 font-semibold">✗ Incorrect:</span> I don't know <s>where is she</s>.<br/>
+              <span class="text-emerald-600 dark:text-emerald-400 font-semibold">✓ Correct:</span> I don't know <strong>where she is</strong>.
+            </p>
+          </div>
+        </div>
+
+        <!-- Sample Sentences: Affirmative, Negative, Interrogative -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 pt-1">
+          <div class="bg-emerald-50/80 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/70 p-4 rounded-xl">
+            <span class="inline-block px-2.5 py-0.5 rounded-md text-xs font-extrabold bg-emerald-600 text-white mb-2">AFFIRMATIVE EXAMPLES</span>
+            <ul class="space-y-2 text-xs sm:text-sm text-slate-800 dark:text-slate-200">
+              <li>• <strong>What you decided</strong> makes complete sense. <em>(Subject)</em></li>
+              <li>• She believes <strong>that practice improves fluency</strong>. <em>(Object)</em></li>
+              <li>• <strong>Whoever finishes early</strong> may read quietly. <em>(Subject)</em></li>
+            </ul>
+          </div>
+
+          <div class="bg-rose-50/80 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800/70 p-4 rounded-xl">
+            <span class="inline-block px-2.5 py-0.5 rounded-md text-xs font-extrabold bg-rose-600 text-white mb-2">NEGATIVE EXAMPLES</span>
+            <ul class="space-y-2 text-xs sm:text-sm text-slate-800 dark:text-slate-200">
+              <li>• He doesn't understand <strong>why the meeting was canceled</strong>.</li>
+              <li>• They didn't tell us <strong>where they parked the car</strong>.</li>
+              <li>• I am not sure <strong>whether she will attend today</strong>.</li>
+            </ul>
+          </div>
+
+          <div class="bg-amber-50/80 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/70 p-4 rounded-xl">
+            <span class="inline-block px-2.5 py-0.5 rounded-md text-xs font-extrabold bg-amber-600 text-white mb-2">INTERROGATIVE EXAMPLES</span>
+            <ul class="space-y-2 text-xs sm:text-sm text-slate-800 dark:text-slate-200">
+              <li>• Do you know <strong>when the library closes</strong>?</li>
+              <li>• Can you explain <strong>how this machine works</strong>?</li>
+              <li>• Could you tell me <strong>if Mr. Rocha graded our essays</strong>?</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 20 Interactive Practice Items -->
+      <div class="mb-4">
+        <h3 class="text-lg font-extrabold text-slate-900 dark:text-white mb-1">
+          Complete the 20 Sentences with the Correct Noun Clause
+        </h3>
+        <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">
+          Use the clue in parentheses to write a grammatically complete noun clause (using statement word order: <em>marker + subject + verb...</em>).
+        </p>
+
+        <div id="act3-questions-container" class="space-y-4">
+          <!-- Rendered dynamically by JS -->
+        </div>
+      </div>
+
+      <!-- Check Answers Button & Feedback -->
+      <div class="mt-6 flex flex-wrap items-center gap-3">
+        <button
+          id="check-btn-3"
+          type="button"
+          onclick="checkActivity3()"
+          class="px-5 py-2.5 rounded-xl font-bold text-sm sm:text-base bg-sky-600 hover:bg-sky-700 text-white shadow transition"
+        >
+          Check Answers
+        </button>
+      </div>
+      <div id="feedback-act3" class="hidden mt-4 p-4 rounded-xl text-sm sm:text-base font-medium"></div>
+
+      <!-- Previous / Next Navigation -->
+      <div class="mt-8 pt-5 border-t border-slate-200 dark:border-slate-800 flex justify-between items-center gap-3">
+        <button
+          type="button"
+          onclick="goToSection(2)"
+          class="flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-sm sm:text-base border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700 transition"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
+          </svg>
+          <span>Previous Activity</span>
+        </button>
+
+        <button
+          type="button"
+          onclick="goToSection(4)"
+          class="flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm sm:text-base bg-sky-600 hover:bg-sky-700 text-white shadow-md transition"
+        >
+          <span>Next Activity</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- ACTIVITY 4: LISTEN AND WRITE (8 DICTATION AUDIO ITEMS)              -->
+    <!-- =================================================================== -->
+    <section id="section-4" class="activity-section hidden bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-800 p-5 sm:p-8">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-800 pb-4 mb-5">
+        <div>
+          <span class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-300 mb-1">
+            Activity 4 of 7 • Audio Dictation
+          </span>
+          <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
+            Listen and Write
+          </h2>
+          <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">
+            Listen to each audio recording carefully and write the exact sentence you hear. Answers with or without contractions are accepted.
+          </p>
+        </div>
+        <span id="badge-act4" class="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+          Not Checked
+        </span>
+      </div>
+
+      <div id="act4-items-container" class="space-y-5">
+        <!-- Rendered dynamically by JS for Audio1 through Audio8 -->
+      </div>
+
+      <!-- Check Answers Button & Feedback -->
+      <div class="mt-6 flex flex-wrap items-center gap-3">
+        <button
+          id="check-btn-4"
+          type="button"
+          onclick="checkActivity4()"
+          class="px-5 py-2.5 rounded-xl font-bold text-sm sm:text-base bg-amber-600 hover:bg-amber-700 text-white shadow transition"
+        >
+          Check Answers
+        </button>
+      </div>
+      <div id="feedback-act4" class="hidden mt-4 p-4 rounded-xl text-sm sm:text-base font-medium"></div>
+
+      <!-- Previous / Next Navigation -->
+      <div class="mt-8 pt-5 border-t border-slate-200 dark:border-slate-800 flex justify-between items-center gap-3">
+        <button
+          type="button"
+          onclick="goToSection(3)"
+          class="flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-sm sm:text-base border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700 transition"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
+          </svg>
+          <span>Previous Activity</span>
+        </button>
+
+        <button
+          type="button"
+          onclick="goToSection(5)"
+          class="flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm sm:text-base bg-sky-600 hover:bg-sky-700 text-white shadow-md transition"
+        >
+          <span>Next Activity</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- ACTIVITY 5: 24-SQUARE IMAGE3 DRAG-AND-DROP PUZZLE                   -->
+    <!-- =================================================================== -->
+    <section id="section-5" class="activity-section hidden bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-800 p-5 sm:p-8">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-800 pb-4 mb-5">
+        <div>
+          <span class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-pink-100 text-pink-700 dark:bg-pink-900/50 dark:text-pink-300 mb-1">
+            Activity 5 of 7 • Visual Spatial Puzzle
+          </span>
+          <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
+            Reconstruct Image 3 (24-Piece Drag &amp; Drop Puzzle)
+          </h2>
+          <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">
+            Drag and drop (or tap a piece, then tap a slot) to assemble all 24 squares to match the Target Image.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2.5">
+          <!-- Timer Display -->
+          <div class="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 flex items-center gap-1.5 font-mono font-bold text-sm sm:text-base text-slate-800 dark:text-sky-300">
+            <svg class="w-4 h-4 text-sky-500" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"></path>
+            </svg>
+            <span id="puzzle-timer">00:00</span>
+          </div>
+
+          <button
+            id="puzzle-do-again-btn"
+            type="button"
+            onclick="resetPuzzle()"
+            class="px-3.5 py-2 rounded-xl font-bold text-xs sm:text-sm bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 border border-slate-300 dark:border-slate-600 transition"
+          >
+            Do Again
+          </button>
+        </div>
+      </div>
+
+      <!-- Puzzle Workspace: Target Image + Puzzle Board + Shuffled Tray -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <!-- Left/Top: Target Reference Image -->
+        <div class="lg:col-span-4 bg-slate-50 dark:bg-slate-800/70 p-4 rounded-2xl border border-slate-200 dark:border-slate-700">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-extrabold uppercase tracking-wider text-sky-700 dark:text-sky-400">Target Image (Reference)</span>
+            <span id="puzzle-placed-count" class="text-xs font-bold text-slate-500 dark:text-slate-400">0 / 24 Placed</span>
+          </div>
+          <div class="rounded-xl overflow-hidden border border-slate-300 dark:border-slate-600 bg-slate-200 dark:bg-slate-900">
+            <canvas id="target-image3-canvas" class="w-full h-auto block"></canvas>
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-2.5 leading-relaxed">
+            <strong>Tip:</strong> On computers, drag pieces into the 6×4 grid. On phones/tablets, you can also tap a piece and tap where you want to place or swap it!
+          </p>
+        </div>
+
+        <!-- Right/Main: 6x4 Assembly Grid & Shuffled Pieces Tray -->
+        <div class="lg:col-span-8 space-y-5">
+          <!-- Target Assembly Canvas Grid (6 columns x 4 rows = 24 squares) -->
+          <div>
+            <span class="block text-xs font-extrabold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-2">
+              Assembly Board (Drop 24 Squares Here)
+            </span>
+            <div
+              id="puzzle-board-grid"
+              class="shiny-blue-box grid grid-cols-6 gap-0.5 bg-slate-300 dark:bg-slate-700 p-1.5 rounded-xl overflow-hidden"
+            >
+              <!-- 24 drop slots generated by JS -->
+            </div>
+          </div>
+
+          <!-- Shuffled Piece Bank -->
+          <div>
+            <span class="block text-xs font-extrabold uppercase tracking-wider text-slate-600 dark:text-slate-300 mb-2">
+              Shuffled Pieces Tray
+            </span>
+            <div
+              id="puzzle-tray-grid"
+              class="grid grid-cols-6 sm:grid-cols-8 gap-1.5 bg-slate-100 dark:bg-slate-800/90 p-3 rounded-xl border border-slate-300 dark:border-slate-700 min-h-[90px]"
+            >
+              <!-- 24 shuffled piece canvases generated by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Check Answers Button & Feedback -->
+      <div class="mt-6 flex flex-wrap items-center gap-3">
+        <button
+          id="check-btn-5"
+          type="button"
+          onclick="checkActivity5()"
+          class="px-5 py-2.5 rounded-xl font-bold text-sm sm:text-base bg-pink-600 hover:bg-pink-700 text-white shadow transition"
+        >
+          Check Answers
+        </button>
+        <span id="badge-act5" class="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+          Not Checked
+        </span>
+      </div>
+      <div id="feedback-act5" class="hidden mt-4 p-4 rounded-xl text-sm sm:text-base font-medium"></div>
+
+      <!-- Previous / Next Navigation -->
+      <div class="mt-8 pt-5 border-t border-slate-200 dark:border-slate-800 flex justify-between items-center gap-3">
+        <button
+          type="button"
+          onclick="goToSection(4)"
+          class="flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-sm sm:text-base border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700 transition"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
+          </svg>
+          <span>Previous Activity</span>
+        </button>
+
+        <button
+          type="button"
+          onclick="goToSection(6)"
+          class="flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm sm:text-base bg-sky-600 hover:bg-sky-700 text-white shadow-md transition"
+        >
+          <span>Next Activity</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- ACTIVITY 6: LISTEN AND READ ("LANDMARKS AROUND THE WORLD")          -->
+    <!-- =================================================================== -->
+    <section id="section-6" class="activity-section hidden bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-800 p-5 sm:p-8">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-800 pb-4 mb-5">
+        <div>
+          <span class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-teal-100 text-teal-800 dark:bg-teal-900/50 dark:text-teal-300 mb-1">
+            Activity 6 of 7 • Listening &amp; Reading Comprehension
+          </span>
+          <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
+            Listen and Read. Select the Correct Answer.
+          </h2>
+        </div>
+        <span id="badge-act6" class="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+          Not Checked
+        </span>
+      </div>
+
+      <!-- Audio9 Player Bar -->
+      <div class="bg-teal-50/70 dark:bg-slate-800 border border-teal-200 dark:border-slate-700 rounded-2xl p-4 mb-6">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-teal-600 text-white flex items-center justify-center font-bold shrink-0">
+              🔊
+            </div>
+            <div>
+              <p class="font-bold text-sm sm:text-base text-slate-900 dark:text-white">Audio 9: Landmarks Around the World</p>
+              <p class="text-xs text-slate-600 dark:text-slate-400">Listen along while reading the passage below.</p>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2 flex-1 sm:flex-initial justify-end">
+            <audio id="audio9-player" controls preload="metadata" class="h-10 max-w-full">
+              <source src="Audio9.mp3" type="audio/mp3" />
+              <source src="Audio9.wav" type="audio/wav" />
+              <source src="Audio9.ogg" type="audio/ogg" />
+              <source src="Audio9.m4a" type="audio/mp4" />
+            </audio>
+            <button
+              type="button"
+              onclick="readPassageAloud()"
+              class="px-3 py-2 rounded-xl text-xs font-bold bg-teal-600 hover:bg-teal-700 text-white transition"
+              title="Backup Voice Reader"
+            >
+              Read Aloud
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reading Passage -->
+      <article class="bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 sm:p-7 mb-7 space-y-4 text-slate-800 dark:text-slate-200 leading-relaxed text-base">
+        <h3 class="text-xl sm:text-2xl font-extrabold text-center text-teal-800 dark:text-teal-300 mb-3">
+          Landmarks Around the World
+        </h3>
+        <p>
+          Landmarks tell us who we are and where we come from. Millions of travelers visit them every year because they want to see history with their own eyes. Many people believe that the Great Wall of China is the longest human-made structure ever built. Its builders hoped that the wall would protect the northern borders, although historians still debate how effective it was.
+        </p>
+        <p>
+          Other landmarks show what people can achieve with imagination. Some Parisian artists criticized the Eiffel Tower when it opened in 1889, yet nobody could have predicted that it would become the symbol of France. Today, whoever climbs its stairs can enjoy a view of the entire city. In India, the Taj Mahal reminds visitors how deeply an emperor loved his wife, since he ordered it built in her memory.
+        </p>
+        <p>
+          Some landmarks are natural wonders. Scientists explain that the Grand Canyon was carved by the Colorado River over millions of years. Visitors often wonder how water alone could create such an enormous space. In Peru, archaeologists still ask why the Incas built Machu Picchu so high in the Andes, and nobody knows for certain.
+        </p>
+        <p>
+          Protecting these places is a global responsibility. Experts warn that too many tourists can damage fragile sites. What each visitor does matters, so travelers should respect the rules and leave nothing behind. Whether we visit them in person or learn about them online, landmarks remind us that our shared heritage deserves care.
+        </p>
+      </article>
+
+      <!-- 6 Multiple Choice Questions -->
+      <div id="act6-questions-container" class="space-y-5">
+        <!-- Rendered dynamically by JS -->
+      </div>
+
+      <!-- Check Answers Button & Feedback -->
+      <div class="mt-6 flex flex-wrap items-center gap-3">
+        <button
+          id="check-btn-6"
+          type="button"
+          onclick="checkActivity6()"
+          class="px-5 py-2.5 rounded-xl font-bold text-sm sm:text-base bg-teal-600 hover:bg-teal-700 text-white shadow transition"
+        >
+          Check Answers
+        </button>
+      </div>
+      <div id="feedback-act6" class="hidden mt-4 p-4 rounded-xl text-sm sm:text-base font-medium"></div>
+
+      <!-- Previous / Next Navigation -->
+      <div class="mt-8 pt-5 border-t border-slate-200 dark:border-slate-800 flex justify-between items-center gap-3">
+        <button
+          type="button"
+          onclick="goToSection(5)"
+          class="flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-sm sm:text-base border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700 transition"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
+          </svg>
+          <span>Previous Activity</span>
+        </button>
+
+        <button
+          type="button"
+          onclick="goToSection(7)"
+          class="flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm sm:text-base bg-sky-600 hover:bg-sky-700 text-white shadow-md transition"
+        >
+          <span>Next Activity</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- ACTIVITY 7: 10 SCRAMBLED NOUN CLAUSE SENTENCES (DRAG & DROP + AUDIO)-->
+    <!-- =================================================================== -->
+    <section id="section-7" class="activity-section hidden bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-800 p-5 sm:p-8">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-800 pb-4 mb-5">
+        <div>
+          <span class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-violet-100 text-violet-700 dark:bg-violet-900/50 dark:text-violet-300 mb-1">
+            Activity 7 of 7 • Sentence Builder &amp; Audio
+          </span>
+          <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
+            Unscramble the 10 Noun Clause Sentences
+          </h2>
+          <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">
+            Click the <strong>Listen</strong> button to hear each sentence read aloud, then drag and drop (or tap) the shuffled words into the shiny blue answer box in the correct order.
+          </p>
+        </div>
+        <span id="badge-act7" class="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+          Not Checked
+        </span>
+      </div>
+
+      <div id="act7-sentences-container" class="space-y-6">
+        <!-- Rendered dynamically by JS -->
+      </div>
+
+      <!-- Check Answers Button & Feedback -->
+      <div class="mt-6 flex flex-wrap items-center gap-3">
+        <button
+          id="check-btn-7"
+          type="button"
+          onclick="checkActivity7()"
+          class="px-5 py-2.5 rounded-xl font-bold text-sm sm:text-base bg-violet-600 hover:bg-violet-700 text-white shadow transition"
+        >
+          Check Answers
+        </button>
+      </div>
+      <div id="feedback-act7" class="hidden mt-4 p-4 rounded-xl text-sm sm:text-base font-medium"></div>
+
+      <!-- Previous / Submit Navigation -->
+      <div class="mt-8 pt-5 border-t border-slate-200 dark:border-slate-800 flex flex-wrap justify-between items-center gap-3">
+        <button
+          type="button"
+          onclick="goToSection(6)"
+          class="flex items-center gap-2 px-4 py-2.5 rounded-xl font-bold text-sm sm:text-base border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700 transition"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
+          </svg>
+          <span>Previous Activity</span>
+        </button>
+
+        <button
+          type="button"
+          onclick="submitWorksheet()"
+          class="flex items-center gap-2 px-6 py-3 rounded-xl font-extrabold text-sm sm:text-base bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white shadow-lg transition"
+        >
+          <span>Submit Worksheet &amp; View Results</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- RESULTS DASHBOARD (ON-SCREEN REPORT, CHARTS, 8 RECOMMENDATIONS, PRINT)-->
+    <!-- =================================================================== -->
+    <section id="results-section" class="hidden bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 p-5 sm:p-8">
+      <!-- Report Header & Print Button -->
+      <div class="flex flex-wrap items-start justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-5 mb-6">
+        <div>
+          <span class="inline-block px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300 mb-1.5">
+            Official Performance Report
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
+            Mr. Rocha’s English Class: Noun Clauses
+          </h2>
+          <div class="mt-2 flex flex-wrap gap-x-6 gap-y-1 text-sm text-slate-600 dark:text-slate-300">
+            <p><strong>Student:</strong> <span id="report-student-name" class="text-sky-600 dark:text-sky-400 font-bold">Student</span></p>
+            <p><strong>Date:</strong> <span id="report-student-date" class="font-semibold">Not specified</span></p>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2.5 no-print">
+          <button
+            type="button"
+            onclick="goToSection(0)"
+            class="px-4 py-2.5 rounded-xl font-bold text-sm border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700 transition"
+          >
+            Back to Worksheet
+          </button>
+          <button
+            type="button"
+            onclick="printResults()"
+            class="flex items-center gap-2 px-5 py-2.5 rounded-xl font-extrabold text-sm bg-sky-600 hover:bg-sky-700 text-white shadow-md transition"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+            </svg>
+            <span>Print Results</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Overall Score Banner + Teacher Feedback -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+        <div class="bg-gradient-to-br from-sky-500 via-indigo-600 to-purple-700 rounded-2xl p-6 text-white shadow-lg flex flex-col justify-center items-center text-center">
+          <span class="text-xs font-extrabold uppercase tracking-widest opacity-90">Overall Score</span>
+          <div id="report-overall-score" class="text-5xl font-black my-1">0%</div>
+          <span id="report-letter-grade" class="px-3 py-1 rounded-full bg-white/20 text-sm font-bold">Grade: —</span>
+        </div>
+
+        <div class="md:col-span-2 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 flex flex-col justify-center">
+          <h3 class="font-extrabold text-base sm:text-lg text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
+            <span>🎓 Mr. Rocha’s Overall Feedback</span>
+          </h3>
+          <p id="report-overall-feedback" class="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed">
+            Complete the worksheet activities and submit to view your personalized feedback.
+          </p>
+        </div>
+      </div>
+
+      <!-- Activity-by-Activity Score Cards -->
+      <div class="mb-8">
+        <h3 class="text-lg font-extrabold text-slate-900 dark:text-white mb-3">Activity Breakdown</h3>
+        <div id="report-activity-cards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+          <!-- Populated dynamically by JS -->
+        </div>
+      </div>
+
+      <!-- Colorful Graphs, Bar Charts & Doughnut Chart -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-8">
+        <!-- Colorful Bar Graph -->
+        <div class="lg:col-span-7 bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 rounded-2xl p-5">
+          <h3 class="text-base font-extrabold text-slate-900 dark:text-white mb-3">
+            📊 Activity Performance Bar Chart (%)
+          </h3>
+          <div class="w-full overflow-x-auto">
+            <canvas id="results-bar-chart" width="540" height="270" class="w-full h-auto block"></canvas>
+          </div>
+        </div>
+
+        <!-- Colorful Doughnut Chart + Skill Bars -->
+        <div class="lg:col-span-5 bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 flex flex-col justify-between">
+          <div>
+            <h3 class="text-base font-extrabold text-slate-900 dark:text-white mb-3">
+              🍩 Overall Mastery Distribution
+            </h3>
+            <div class="flex items-center justify-center">
+              <canvas id="results-donut-chart" width="240" height="210" class="max-w-full h-auto block"></canvas>
+            </div>
+          </div>
+
+          <!-- Horizontal Skill Progress Bars -->
+          <div id="results-skill-bars" class="mt-4 space-y-2.5">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+      </div>
+
+      <!-- 8 Specific Recommendations Based on User Answers and Results -->
+      <div class="bg-gradient-to-br from-amber-50 to-orange-50/60 dark:from-slate-800 dark:to-slate-800/90 border border-amber-200 dark:border-slate-700 rounded-2xl p-5 sm:p-6">
+        <h3 class="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white mb-1 flex items-center gap-2">
+          <span>💡 8 Specific Study Recommendations from Mr. Rocha</span>
+        </h3>
+        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mb-4">
+          Tailored specifically to your responses and activity scores on this worksheet:
+        </p>
+        <ol id="report-recommendations-list" class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+          <!-- 8 dynamic recommendations injected here -->
+        </ol>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- JAVASCRIPT APPLICATION LOGIC -->
+  <script>
+    /* =========================================================================
+       1. GLOBAL STATE & DATA DEFINITIONS
+       ========================================================================= */
+    const state = {
+      currentSection: 0, // 0 = Intro, 1..7 = Activities, 8 = Results
+      checked: {
+        1: false,
+        2: false,
+        3: false,
+        4: false,
+        5: false,
+        6: false,
+        7: false,
+      },
+      scores: {
+        1: { earned: 0, max: 10, pct: 0, details: '' },
+        2: { earned: 0, max: 10, pct: 0, details: '' },
+        3: { earned: 0, max: 20, pct: 0, details: '' },
+        4: { earned: 0, max: 8, pct: 0, details: '' },
+        5: { earned: 0, max: 24, pct: 0, details: '' },
+        6: { earned: 0, max: 6, pct: 0, details: '' },
+        7: { earned: 0, max: 10, pct: 0, details: '' },
+      },
+      puzzle: {
+        rows: 4,
+        cols: 6,
+        total: 24,
+        board: new Array(24).fill(null), // holds pieceIndex (0..23) or null
+        tray: [], // holds remaining pieceIndex values
+        selectedPiece: null, // { source: 'tray'|'board', index: number, pieceId: number }
+        timerSeconds: 0,
+        timerInterval: null,
+        timerStarted: false,
+        imageLoaded: null,
+      },
+      act7: {
+        userOrders: [], // array of arrays of word objects
+        wordBanks: [],  // array of arrays of word objects
+      }
+    };
+
+    /* Activity 3 Data: 20 Noun Clause Completion Sentences */
+    const act3Questions = [
+      {
+        id: 1,
+        type: 'Affirmative',
+        prefix: 'I truly believe',
+        clue: '(that / honesty / be / the best policy)',
+        suffix: '.',
+        answers: ['that honesty is the best policy', 'honesty is the best policy'],
+        sample: 'that honesty is the best policy'
+      },
+      {
+        id: 2,
+        type: 'Affirmative',
+        prefix: '',
+        clue: '(What / she / say / during the meeting)',
+        suffix: 'surprised everyone in the room.',
+        answers: ['what she said during the meeting', 'what she said'],
+        sample: 'What she said during the meeting'
+      },
+      {
+        id: 3,
+        type: 'Negative',
+        prefix: 'We do not know',
+        clue: '(where / the new student / live)',
+        suffix: '.',
+        answers: ['where the new student lives'],
+        sample: 'where the new student lives'
+      },
+      {
+        id: 4,
+        type: 'Interrogative',
+        prefix: 'Do you know',
+        clue: '(when / the final exam / start)',
+        suffix: '?',
+        answers: ['when the final exam starts'],
+        sample: 'when the final exam starts'
+      },
+      {
+        id: 5,
+        type: 'Affirmative',
+        prefix: 'Mr. Rocha explained',
+        clue: '(how / noun clauses / function / in sentences)',
+        suffix: '.',
+        answers: ['how noun clauses function in sentences'],
+        sample: 'how noun clauses function in sentences'
+      },
+      {
+        id: 6,
+        type: 'Negative',
+        prefix: 'They could not understand',
+        clue: '(why / the flight / be / delayed)',
+        suffix: '.',
+        answers: ['why the flight was delayed', 'why the flight is delayed'],
+        sample: 'why the flight was delayed'
+      },
+      {
+        id: 7,
+        type: 'Interrogative',
+        prefix: 'Can you tell me',
+        clue: '(whether / the library / be / open today)',
+        suffix: '?',
+        answers: ['whether the library is open today', 'if the library is open today', 'whether or not the library is open today'],
+        sample: 'whether the library is open today'
+      },
+      {
+        id: 8,
+        type: 'Affirmative',
+        prefix: '',
+        clue: '(Whoever / finish / the project first)',
+        suffix: 'will earn extra credit.',
+        answers: ['whoever finishes the project first'],
+        sample: 'Whoever finishes the project first'
+      },
+      {
+        id: 9,
+        type: 'Negative',
+        prefix: 'She did not remember',
+        clue: '(who / send / the mysterious letter)',
+        suffix: '.',
+        answers: ['who sent the mysterious letter'],
+        sample: 'who sent the mysterious letter'
+      },
+      {
+        id: 10,
+        type: 'Interrogative',
+        prefix: 'Could you explain',
+        clue: '(why / you / choose / this topic)',
+        suffix: '?',
+        answers: ['why you chose this topic', 'why you choose this topic'],
+        sample: 'why you chose this topic'
+      },
+      {
+        id: 11,
+        type: 'Affirmative',
+        prefix: 'The main problem is',
+        clue: '(that / we / not have / enough time)',
+        suffix: '.',
+        answers: ['that we do not have enough time', "that we don't have enough time"],
+        sample: "that we don't have enough time"
+      },
+      {
+        id: 12,
+        type: 'Negative',
+        prefix: 'I am not sure',
+        clue: '(if / he / receive / my email yesterday)',
+        suffix: '.',
+        answers: ['if he received my email yesterday', 'whether he received my email yesterday'],
+        sample: 'if he received my email yesterday'
+      },
+      {
+        id: 13,
+        type: 'Interrogative',
+        prefix: 'Have you heard',
+        clue: '(which team / win / the championship)',
+        suffix: '?',
+        answers: ['which team won the championship'],
+        sample: 'which team won the championship'
+      },
+      {
+        id: 14,
+        type: 'Affirmative',
+        prefix: 'You can choose',
+        clue: '(whatever / book / interest / you most)',
+        suffix: '.',
+        answers: ['whatever book interests you most', 'whichever book interests you most'],
+        sample: 'whatever book interests you most'
+      },
+      {
+        id: 15,
+        type: 'Negative',
+        prefix: 'Nobody noticed',
+        clue: '(whose backpack / be / left on the desk)',
+        suffix: '.',
+        answers: ['whose backpack was left on the desk'],
+        sample: 'whose backpack was left on the desk'
+      },
+      {
+        id: 16,
+        type: 'Interrogative',
+        prefix: 'Did the principal announce',
+        clue: '(who / will / speak / at graduation)',
+        suffix: '?',
+        answers: ['who will speak at graduation'],
+        sample: 'who will speak at graduation'
+      },
+      {
+        id: 17,
+        type: 'Affirmative',
+        prefix: 'Scientists discovered',
+        clue: '(that / water / once flow / on Mars)',
+        suffix: '.',
+        answers: ['that water once flowed on Mars'],
+        sample: 'that water once flowed on Mars'
+      },
+      {
+        id: 18,
+        type: 'Negative',
+        prefix: 'He never revealed',
+        clue: '(what / he / find / inside the old box)',
+        suffix: '.',
+        answers: ['what he found inside the old box'],
+        sample: 'what he found inside the old box'
+      },
+      {
+        id: 19,
+        type: 'Interrogative',
+        prefix: 'Can anyone tell us',
+        clue: '(how much / the tickets / cost)',
+        suffix: '?',
+        answers: ['how much the tickets cost'],
+        sample: 'how much the tickets cost'
+      },
+      {
+        id: 20,
+        type: 'Affirmative',
+        prefix: '',
+        clue: '(How / we / treat / others)',
+        suffix: 'reflects our true character.',
+        answers: ['how we treat others'],
+        sample: 'How we treat others'
+      }
+    ];
+
+    /* Activity 4 Data: 8 Audio Dictation Sentences */
+    const act4Items = [
+      {
+        id: 1,
+        audioBase: 'Audio1',
+        canonical: 'I believe that learning English opens many doors.',
+        accepted: ['i believe that learning english opens many doors']
+      },
+      {
+        id: 2,
+        audioBase: 'Audio2',
+        canonical: 'The teacher knows who copied on the exam.',
+        accepted: ['the teacher knows who copied on the exam']
+      },
+      {
+        id: 3,
+        audioBase: 'Audio3',
+        canonical: 'What you say is important to me.',
+        accepted: ['what you say is important to me']
+      },
+      {
+        id: 4,
+        audioBase: 'Audio4',
+        canonical: "He doesn't understand why the train was late.",
+        accepted: [
+          "he doesn't understand why the train was late",
+          'he does not understand why the train was late'
+        ]
+      },
+      {
+        id: 5,
+        audioBase: 'Audio5',
+        canonical: "They didn't tell us who won the game.",
+        accepted: [
+          "they didn't tell us who won the game",
+          'they did not tell us who won the game'
+        ]
+      },
+      {
+        id: 6,
+        audioBase: 'Audio6',
+        canonical: "I can't remember how she solved the problem.",
+        accepted: [
+          "i can't remember how she solved the problem",
+          'i cannot remember how she solved the problem',
+          'i can not remember how she solved the problem'
+        ]
+      },
+      {
+        id: 7,
+        audioBase: 'Audio7',
+        canonical: 'Do you know whether the store is open on Sundays?',
+        accepted: ['do you know whether the store is open on sundays']
+      },
+      {
+        id: 8,
+        audioBase: 'Audio8',
+        canonical: 'Can you tell me if the teacher graded the exams?',
+        accepted: ['can you tell me if the teacher graded the exams']
+      }
+    ];
+
+    /* Activity 6 Data: Landmarks Around the World Comprehension */
+    const act6Questions = [
+      {
+        id: 1,
+        question: '1. Which statement best expresses the main idea of the text?',
+        options: {
+          A: 'Landmarks are important mainly because they bring money to cities.',
+          B: 'Landmarks show human achievement, history, and nature, and they deserve protection.',
+          C: 'The Eiffel Tower is the most important landmark in the world.',
+          D: 'Natural wonders are more valuable than human-made landmarks.'
+        },
+        correct: 'B',
+        explanation: 'The text explains that landmarks reflect achievement, history, and nature, and that protecting them is a shared responsibility.'
+      },
+      {
+        id: 2,
+        question: '2. What does the author imply by saying that historians “still debate how effective it was”?',
+        options: {
+          A: 'The Great Wall was never finished.',
+          B: 'Historians agree that the wall completely failed.',
+          C: 'Experts disagree about how well the wall protected the borders.',
+          D: 'The wall no longer exists today.'
+        },
+        correct: 'C',
+        explanation: '“Debate” means experts disagree about how effective the wall was.'
+      },
+      {
+        id: 3,
+        question: '3. Why does the author mention that some artists criticized the Eiffel Tower?',
+        options: {
+          A: 'To prove that artists understand architecture better than engineers.',
+          B: 'To explain why the tower was removed from Paris.',
+          C: 'To show that Paris has more landmarks than any other city.',
+          D: 'To show that something disliked at first can later become a beloved symbol.'
+        },
+        correct: 'D',
+        explanation: 'The tower was criticized at first, yet it became the symbol of France.'
+      },
+      {
+        id: 4,
+        question: '4. In the sentence “whoever climbs its stairs can enjoy a view of the entire city,” what is the function of the noun clause “whoever climbs its stairs”?',
+        options: {
+          A: 'It is the subject of the sentence.',
+          B: 'It is the object of a verb.',
+          C: 'It is the object of a preposition.',
+          D: 'It describes the noun “stairs.”'
+        },
+        correct: 'A',
+        explanation: 'The noun clause “whoever climbs its stairs” is the subject of “can enjoy.”'
+      },
+      {
+        id: 5,
+        question: '5. Based on the paragraph about natural wonders, which conclusion is best supported?',
+        options: {
+          A: 'Scientists have solved every mystery about famous landmarks.',
+          B: 'The Incas built Machu Picchu to imitate the Grand Canyon.',
+          C: 'Landmarks can inspire curiosity even when some questions remain unanswered.',
+          D: 'Rivers are more powerful than any human builder.'
+        },
+        correct: 'C',
+        explanation: 'Visitors wonder how the canyon formed, and archaeologists still ask why Machu Picchu was built so high; both show lasting curiosity.'
+      },
+      {
+        id: 6,
+        question: '6. Which action would best apply the advice in the final paragraph?',
+        options: {
+          A: 'Taking a small stone from a monument as a souvenir.',
+          B: 'Visiting only landmarks that are close to home.',
+          C: 'Climbing on fragile walls to take better photos.',
+          D: 'Following the site rules and leaving no trash behind.'
+        },
+        correct: 'D',
+        explanation: 'The author says travelers should respect the rules and leave nothing behind.'
+      }
+    ];
+
+    /* Activity 7 Data: 10 Scrambled Noun Clause Sentences with Different Markers */
+    const act7Sentences = [
+      {
+        id: 1,
+        marker: 'that',
+        sentence: 'Everyone agrees that reading every day improves vocabulary.',
+        words: ['Everyone', 'agrees', 'that', 'reading', 'every', 'day', 'improves', 'vocabulary.']
+      },
+      {
+        id: 2,
+        marker: 'what',
+        sentence: 'What you practice today prepares you for tomorrow.',
+        words: ['What', 'you', 'practice', 'today', 'prepares', 'you', 'for', 'tomorrow.']
+      },
+      {
+        id: 3,
+        marker: 'whoever',
+        sentence: 'Whoever studies carefully will pass the grammar test.',
+        words: ['Whoever', 'studies', 'carefully', 'will', 'pass', 'the', 'grammar', 'test.']
+      },
+      {
+        id: 4,
+        marker: 'why',
+        sentence: 'Nobody explained why the museum closed early yesterday.',
+        words: ['Nobody', 'explained', 'why', 'the', 'museum', 'closed', 'early', 'yesterday.']
+      },
+      {
+        id: 5,
+        marker: 'how',
+        sentence: 'Can you show me how this software works?',
+        words: ['Can', 'you', 'show', 'me', 'how', 'this', 'software', 'works?']
+      },
+      {
+        id: 6,
+        marker: 'whether',
+        sentence: 'We are not sure whether the bus arrives at noon.',
+        words: ['We', 'are', 'not', 'sure', 'whether', 'the', 'bus', 'arrives', 'at', 'noon.']
+      },
+      {
+        id: 7,
+        marker: 'where',
+        sentence: 'Please tell the driver where you want to stop.',
+        words: ['Please', 'tell', 'the', 'driver', 'where', 'you', 'want', 'to', 'stop.']
+      },
+      {
+        id: 8,
+        marker: 'when',
+        sentence: 'Do you remember when the concert begins tonight?',
+        words: ['Do', 'you', 'remember', 'when', 'the', 'concert', 'begins', 'tonight?']
+      },
+      {
+        id: 9,
+        marker: 'whose',
+        sentence: 'The teacher asked whose notebook was on the floor.',
+        words: ['The', 'teacher', 'asked', 'whose', 'notebook', 'was', 'on', 'the', 'floor.']
+      },
+      {
+        id: 10,
+        marker: 'which',
+        sentence: 'You may choose whichever seat is closest to the board.',
+        words: ['You', 'may', 'choose', 'whichever', 'seat', 'is', 'closest', 'to', 'the', 'board.']
+      }
+    ];
+
+    /* =========================================================================
+       2. INITIALIZATION & THEME / NAVIGATION HELPERS
+       ========================================================================= */
+    window.addEventListener('DOMContentLoaded', () => {
+      // Set default date in calendar input to today if empty
+      const dateInput = document.getElementById('student-date');
+      if (dateInput && !dateInput.value) {
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.value = today;
+      }
+
+      // Build Quick Nav Pills
+      renderNavPills();
+
+      // Render Activity 3, 4, 6, 7
+      renderActivity3();
+      renderActivity4();
+      renderActivity6();
+      renderActivity7();
+
+      // Initialize Activity 5 (Image3 24-piece Puzzle)
+      initImage3Puzzle();
+
+      // Setup Video1 error listener
+      const vid = document.getElementById('video1-player');
+      if (vid) {
+        vid.addEventListener('error', () => {
+          document.getElementById('video1-fallback-msg').classList.remove('hidden');
+        }, true);
+      }
+
+      updateProgress();
+    });
+
+    function toggleTheme() {
+      const htmlEl = document.documentElement;
+      const isDark = htmlEl.classList.contains('dark');
+      const sunIcon = document.getElementById('icon-sun');
+      const moonIcon = document.getElementById('icon-moon');
+      const label = document.getElementById('theme-label');
+
+      if (isDark) {
+        htmlEl.classList.remove('dark');
+        htmlEl.classList.add('light');
+        sunIcon.classList.add('hidden');
+        moonIcon.classList.remove('hidden');
+        label.textContent = 'Dark Mode';
+      } else {
+        htmlEl.classList.remove('light');
+        htmlEl.classList.add('dark');
+        moonIcon.classList.add('hidden');
+        sunIcon.classList.remove('hidden');
+        label.textContent = 'Light Mode';
+      }
+
+      // Redraw charts if results are visible
+      if (!document.getElementById('results-section').classList.contains('hidden')) {
+        drawResultCharts();
+      }
+    }
+
+    function renderNavPills() {
+      const nav = document.getElementById('section-nav-pills');
+      const labels = [
+        'Intro',
+        'Act 1: Video',
+        'Act 2: Story',
+        'Act 3: Grammar (20)',
+        'Act 4: Dictation (8)',
+        'Act 5: Puzzle (24)',
+        'Act 6: Reading (6)',
+        'Act 7: Scramble (10)',
+        'Results'
+      ];
+      nav.innerHTML = labels.map((lbl, idx) => {
+        const active = state.currentSection === idx;
+        const isChecked = idx >= 1 && idx <= 7 && state.checked[idx];
+        let cls = 'px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition flex items-center gap-1 ';
+        if (active) {
+          cls += 'bg-sky-600 text-white shadow-sm';
+        } else if (isChecked) {
+          cls += 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700';
+        } else {
+          cls += 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700';
+        }
+        return `<button type="button" onclick="goToSection(${idx})" class="${cls}">
+          <span>${lbl}</span>
+          ${isChecked ? '<span>✓</span>' : ''}
+        </button>`;
+      }).join('');
+    }
+
+    function goToSection(index) {
+      // Stop any speech synthesis when switching sections
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+
+      if (index === 8) {
+        submitWorksheet();
+        return;
+      }
+
+      state.currentSection = index;
+
+      // Hide all sections & results
+      document.querySelectorAll('.activity-section').forEach(sec => sec.classList.add('hidden'));
+      document.getElementById('results-section').classList.add('hidden');
+
+      // Show requested section (Image1 is inside section-0, so it only shows in Intro!)
+      const target = document.getElementById(`section-${index}`);
+      if (target) {
+        target.classList.remove('hidden');
+      }
+
+      // Start puzzle timer automatically if entering Activity 5 for the first time and not checked
+      if (index === 5 && !state.checked[5] && !state.puzzle.timerStarted) {
+        startPuzzleTimer();
+      }
+
+      renderNavPills();
+      updateProgress();
+
+      // Scroll smoothly to top of the page as required
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* Multi-extension image fallback handler for Image1, Image2, Image3 */
+    function handleImageFallback(imgEl, captionText) {
+      const base = imgEl.getAttribute('data-base');
+      const tried = (imgEl.getAttribute('data-tried') || '').split(',').filter(Boolean);
+      const extensions = ['png', 'jpeg', 'webp', 'JPG', 'PNG'];
+
+      for (const ext of extensions) {
+        if (!tried.includes(ext)) {
+          tried.push(ext);
+          imgEl.setAttribute('data-tried', tried.join(','));
+          imgEl.src = `${base}.${ext}`;
+          return;
+        }
+      }
+
+      // If none of the local extensions exist in preview environment, render clean SVG graphic
+      const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="960" height="420" viewBox="0 0 960 420">
+          <defs>
+            <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#0284c7"/>
+              <stop offset="50%" stop-color="#4f46e5"/>
+              <stop offset="100%" stop-color="#7c3aed"/>
+            </linearGradient>
+          </defs>
+          <rect width="960" height="420" rx="20" fill="url(#bg)"/>
+          <circle cx="140" cy="110" r="90" fill="rgba(255,255,255,0.08)"/>
+          <circle cx="830" cy="320" r="120" fill="rgba(255,255,255,0.08)"/>
+          <text x="480" y="185" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="800" fill="#ffffff" text-anchor="middle">
+            ${captionText}
+          </text>
+          <text x="480" y="235" font-family="Inter, Arial, sans-serif" font-size="18" fill="#e0f2fe" text-anchor="middle">
+            (${base}.jpg / .png will display automatically when placed in the same folder)
+          </text>
+        </svg>`;
+      imgEl.onerror = null;
+      imgEl.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+    }
+
+    function updateProgress() {
+      let unitsCompleted = 0;
+      const totalUnits = 8; // Intro info + 7 activities
+
+      // Intro check
+      const nameVal = (document.getElementById('student-name')?.value || '').trim();
+      const dateVal = (document.getElementById('student-date')?.value || '').trim();
+      if (nameVal.length > 0 && dateVal.length > 0) unitsCompleted += 1;
+
+      // Act 1
+      if (state.checked[1] || (document.getElementById('act1-response')?.value || '').trim().length >= 15) {
+        unitsCompleted += 1;
+      }
+      // Act 2
+      if (state.checked[2] || (document.getElementById('act2-response')?.value || '').trim().length >= 15) {
+        unitsCompleted += 1;
+      }
+      // Act 3
+      const act3Filled = act3Questions.filter(q => {
+        const el = document.getElementById(`act3-input-${q.id}`);
+        return el && el.value.trim().length > 0;
+      }).length;
+      if (state.checked[3] || act3Filled >= 10) unitsCompleted += 1;
+      else unitsCompleted += (act3Filled / 20);
+
+      // Act 4
+      const act4Filled = act4Items.filter(item => {
+        const el = document.getElementById(`act4-input-${item.id}`);
+        return el && el.value.trim().length > 0;
+      }).length;
+      if (state.checked[4] || act4Filled >= 4) unitsCompleted += 1;
+      else unitsCompleted += (act4Filled / 8);
+
+      // Act 5
+      const placedCount = state.puzzle.board.filter(x => x !== null).length;
+      if (state.checked[5] || placedCount >= 12) unitsCompleted += 1;
+      else unitsCompleted += (placedCount / 24);
+
+      // Act 6
+      const act6Answered = act6Questions.filter(q => {
+        return document.querySelector(`input[name="act6-q${q.id}"]:checked`) !== null;
+      }).length;
+      if (state.checked[6] || act6Answered >= 3) unitsCompleted += 1;
+      else unitsCompleted += (act6Answered / 6);
+
+      // Act 7
+      const act7Attempted = state.act7.userOrders.filter(arr => arr && arr.length > 0).length;
+      if (state.checked[7] || act7Attempted >= 5) unitsCompleted += 1;
+      else unitsCompleted += (act7Attempted / 10);
+
+      const pct = Math.min(100, Math.round((unitsCompleted / totalUnits) * 100));
+      document.getElementById('progress-bar-fill').style.width = `${Math.max(5, pct)}%`;
+      document.getElementById('progress-percent-text').textContent = `${pct}% Completed`;
+
+      const sectionNames = [
+        'Introduction',
+        'Activity 1: Video Reflection',
+        'Activity 2: Story Reading',
+        'Activity 3: Noun Clauses Practice',
+        'Activity 4: Listen & Write',
+        'Activity 5: 24-Piece Puzzle',
+        'Activity 6: Reading Comprehension',
+        'Activity 7: Sentence Scramble',
+        'Results Report'
+      ];
+      document.getElementById('progress-status-text').textContent = `Current: ${sectionNames[state.currentSection] || 'Worksheet'}`;
+    }
+
+    /* =========================================================================
+       3. ACTIVITY 1 & 2 EVALUATION & LOCKING
+       ========================================================================= */
+    function evaluateWrittenResponse(text) {
+      const cleaned = text.trim();
+      const words = cleaned.split(/\s+/).filter(Boolean);
+      const markers = ['that', 'what', 'whatever', 'who', 'whoever', 'whom', 'whose', 'which', 'whichever', 'when', 'where', 'why', 'how', 'whether', 'if'];
+      const lower = cleaned.toLowerCase();
+      const usedMarkers = markers.filter(m => new RegExp(`\\b${m}\\b`).test(lower));
+
+      if (words.length === 0) {
+        return { score: 0, usedMarkers: [], message: 'No response was entered before checking answers.' };
+      }
+      if (words.length < 8) {
+        return {
+          score: 5,
+          usedMarkers,
+          message: `Good start (${words.length} words), though Mr. Rocha encourages a more detailed summary (15+ words) using noun clauses.`
+        };
+      }
+      if (usedMarkers.length > 0) {
+        return {
+          score: 10,
+          usedMarkers,
+          message: `Excellent work! You wrote ${words.length} words and effectively used noun clause marker(s): "${usedMarkers.slice(0, 4).join(', ')}".`
+        };
+      }
+      return {
+        score: 8,
+        usedMarkers: [],
+        message: `Nice summary (${words.length} words)! Next time, try adding noun clause starters like "I noticed that..." or "What stood out was...".`
+      };
+    }
+
+    function checkActivity1() {
+      if (state.checked[1]) return;
+      const textarea = document.getElementById('act1-response');
+      const result = evaluateWrittenResponse(textarea.value);
+
+      state.checked[1] = true;
+      state.scores[1] = {
+        earned: result.score,
+        max: 10,
+        pct: Math.round((result.score / 10) * 100),
+        details: result.message
+      };
+
+      // Lock textarea & button
+      textarea.disabled = true;
+      textarea.classList.add('locked-input');
+      const btn = document.getElementById('check-btn-1');
+      btn.disabled = true;
+      btn.classList.add('opacity-50', 'cursor-not-allowed');
+      btn.textContent = 'Answers Checked ✓';
+
+      const badge = document.getElementById('badge-act1');
+      badge.textContent = `Checked • ${result.score}/10 pts`;
+      badge.className = 'px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-300';
+
+      const fb = document.getElementById('feedback-act1');
+      fb.classList.remove('hidden');
+      fb.className = result.score >= 8
+        ? 'mt-4 p-4 rounded-xl text-sm sm:text-base font-medium bg-emerald-50 text-emerald-900 border border-emerald-300 dark:bg-emerald-950/60 dark:text-emerald-200 dark:border-emerald-800'
+        : 'mt-4 p-4 rounded-xl text-sm sm:text-base font-medium bg-amber-50 text-amber-900 border border-amber-300 dark:bg-amber-950/60 dark:text-amber-200 dark:border-amber-800';
+      fb.innerHTML = `<strong>Score: ${result.score} / 10</strong> — ${result.message}`;
+
+      renderNavPills();
+      updateProgress();
+    }
+
+    function checkActivity2() {
+      if (state.checked[2]) return;
+      const textarea = document.getElementById('act2-response');
+      const result = evaluateWrittenResponse(textarea.value);
+
+      state.checked[2] = true;
+      state.scores[2] = {
+        earned: result.score,
+        max: 10,
+        pct: Math.round((result.score / 10) * 100),
+        details: result.message
+      };
+
+      // Lock textarea & button
+      textarea.disabled = true;
+      textarea.classList.add('locked-input');
+      const btn = document.getElementById('check-btn-2');
+      btn.disabled = true;
+      btn.classList.add('opacity-50', 'cursor-not-allowed');
+      btn.textContent = 'Answers Checked ✓';
+
+      const badge = document.getElementById('badge-act2');
+      badge.textContent = `Checked • ${result.score}/10 pts`;
+      badge.className = 'px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-300';
+
+      const fb = document.getElementById('feedback-act2');
+      fb.classList.remove('hidden');
+      fb.className = result.score >= 8
+        ? 'mt-4 p-4 rounded-xl text-sm sm:text-base font-medium bg-emerald-50 text-emerald-900 border border-emerald-300 dark:bg-emerald-950/60 dark:text-emerald-200 dark:border-emerald-800'
+        : 'mt-4 p-4 rounded-xl text-sm sm:text-base font-medium bg-amber-50 text-amber-900 border border-amber-300 dark:bg-amber-950/60 dark:text-amber-200 dark:border-amber-800';
+      fb.innerHTML = `<strong>Score: ${result.score} / 10</strong> — ${result.message}`;
+
+      renderNavPills();
+      updateProgress();
+    }
+
+    /* =========================================================================
+       4. ACTIVITY 3: 20 NOUN CLAUSE SENTENCES
+       ========================================================================= */
+    function renderActivity3() {
+      const container = document.getElementById('act3-questions-container');
+      container.innerHTML = act3Questions.map(q => {
+        let typeColor = 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300';
+        if (q.type === 'Negative') typeColor = 'bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-300';
+        if (q.type === 'Interrogative') typeColor = 'bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-300';
+
+        return `
+          <div id="act3-card-${q.id}" class="p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-800/50 transition">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+              <span class="text-xs font-extrabold text-slate-500 dark:text-slate-400">Sentence #${q.id}</span>
+              <span class="px-2.5 py-0.5 rounded-md text-xs font-bold ${typeColor}">${q.type}</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 text-sm sm:text-base font-medium text-slate-800 dark:text-slate-100">
+              ${q.prefix ? `<span>${q.prefix}</span>` : ''}
+              <input
+                type="text"
+                id="act3-input-${q.id}"
+                oninput="updateProgress()"
+                placeholder="Complete noun clause..."
+                aria-label="Sentence ${q.id} noun clause"
+                class="shiny-blue-box flex-1 min-w-[220px] sm:min-w-[300px] px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 font-medium text-sm sm:text-base"
+              />
+              <span>${q.suffix}</span>
+            </div>
+            <p class="text-xs text-sky-700 dark:text-sky-400 mt-1.5 font-medium">Clue: ${q.clue}</p>
+            <div id="act3-item-fb-${q.id}" class="hidden mt-2 text-xs sm:text-sm font-semibold"></div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function normalizeText(str) {
+      return str
+        .toLowerCase()
+        .replace(/[’‘]/g, "'")
+        .replace(/[.?!,;:"()]/g, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+
+    function checkActivity3() {
+      if (state.checked[3]) return;
+      let correctCount = 0;
+
+      act3Questions.forEach(q => {
+        const input = document.getElementById(`act3-input-${q.id}`);
+        const card = document.getElementById(`act3-card-${q.id}`);
+        const itemFb = document.getElementById(`act3-item-fb-${q.id}`);
+        const userVal = normalizeText(input.value);
+
+        // Lock input
+        input.disabled = true;
+        input.classList.add('locked-input');
+
+        const isCorrect = q.answers.some(ans => normalizeText(ans) === userVal);
+
+        itemFb.classList.remove('hidden');
+        if (isCorrect) {
+          correctCount++;
+          card.classList.add('border-emerald-400', 'dark:border-emerald-600', 'bg-emerald-50/40', 'dark:bg-emerald-950/30');
+          itemFb.className = 'mt-2 text-xs sm:text-sm font-bold text-emerald-700 dark:text-emerald-400';
+          itemFb.innerHTML = `✓ Correct!`;
+        } else {
+          card.classList.add('border-rose-400', 'dark:border-rose-600', 'bg-rose-50/40', 'dark:bg-rose-950/30');
+          itemFb.className = 'mt-2 text-xs sm:text-sm font-bold text-rose-700 dark:text-rose-400';
+          itemFb.innerHTML = `✗ Incorrect. Sample correct answer: <span class="underline">${q.sample}</span>`;
+        }
+      });
+
+      state.checked[3] = true;
+      const pct = Math.round((correctCount / act3Questions.length) * 100);
+      state.scores[3] = {
+        earned: correctCount,
+        max: act3Questions.length,
+        pct,
+        details: `${correctCount} out of ${act3Questions.length} noun clause completions correct.`
+      };
+
+      const btn = document.getElementById('check-btn-3');
+      btn.disabled = true;
+      btn.classList.add('opacity-50', 'cursor-not-allowed');
+      btn.textContent = 'Answers Checked ✓';
+
+      const badge = document.getElementById('badge-act3');
+      badge.textContent = `Checked • ${correctCount}/20 (${pct}%)`;
+      badge.className = 'px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-300';
+
+      const fb = document.getElementById('feedback-act3');
+      fb.classList.remove('hidden');
+      fb.className = 'mt-4 p-4 rounded-xl text-sm sm:text-base font-bold bg-sky-50 text-sky-900 border border-sky-300 dark:bg-sky-950/60 dark:text-sky-200 dark:border-sky-800';
+      fb.innerHTML = `Activity 3 Complete! You scored ${correctCount} out of 20 (${pct}%). Review any red items above to see the statement word order.`;
+
+      renderNavPills();
+      updateProgress();
+    }
+
+    /* =========================================================================
+       5. ACTIVITY 4: LISTEN AND WRITE (8 AUDIO DICTATION ITEMS)
+       ========================================================================= */
+    function renderActivity4() {
+      const container = document.getElementById('act4-items-container');
+      container.innerHTML = act4Items.map(item => `
+        <div id="act4-card-${item.id}" class="p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-800/50">
+          <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+            <span class="font-extrabold text-base text-slate-900 dark:text-white flex items-center gap-2">
+              <span class="w-7 h-7 rounded-lg bg-amber-500 text-white text-xs font-extrabold flex items-center justify-center">${item.id}</span>
+              <span>Audio ${item.id}</span>
+            </span>
+
+            <div class="flex flex-wrap items-center gap-2">
+              <audio id="audio-player-${item.id}" controls preload="metadata" class="h-9 max-w-[230px] sm:max-w-xs">
+                <source src="${item.audioBase}.mp3" type="audio/mp3" />
+                <source src="${item.audioBase}.wav" type="audio/wav" />
+                <source src="${item.audioBase}.ogg" type="audio/ogg" />
+                <source src="${item.audioBase}.m4a" type="audio/mp4" />
+              </audio>
+              <button
+                type="button"
+                onclick="speakText('${item.canonical.replace(/'/g, "\\'")}', 0.9)"
+                class="px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-100 hover:bg-amber-200 text-amber-900 dark:bg-amber-900/50 dark:text-amber-200 dark:hover:bg-amber-900 transition"
+                title="Play synthesized audio if local audio file is unavailable"
+              >
+                🔊 Voice Backup
+              </button>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <span class="font-bold text-slate-700 dark:text-slate-300">${item.id}.</span>
+            <input
+              type="text"
+              id="act4-input-${item.id}"
+              oninput="updateProgress()"
+              placeholder="Type the exact sentence you hear..."
+              aria-label="Dictation sentence ${item.id}"
+              class="shiny-blue-box w-full px-4 py-2.5 rounded-xl bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 text-sm sm:text-base font-medium"
+            />
+          </div>
+          <div id="act4-item-fb-${item.id}" class="hidden mt-2.5 text-xs sm:text-sm font-semibold"></div>
+        </div>
+      `).join('');
+    }
+
+    function speakText(text, rate = 0.95) {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'en-US';
+      utterance.rate = rate;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function checkActivity4() {
+      if (state.checked[4]) return;
+      let correctCount = 0;
+
+      act4Items.forEach(item => {
+        const input = document.getElementById(`act4-input-${item.id}`);
+        const card = document.getElementById(`act4-card-${item.id}`);
+        const itemFb = document.getElementById(`act4-item-fb-${item.id}`);
+        const cleanedUser = normalizeText(input.value);
+
+        // Lock input
+        input.disabled = true;
+        input.classList.add('locked-input');
+
+        const isCorrect = item.accepted.some(acc => normalizeText(acc) === cleanedUser);
+
+        itemFb.classList.remove('hidden');
+        if (isCorrect) {
+          correctCount++;
+          card.classList.add('border-emerald-400', 'dark:border-emerald-600', 'bg-emerald-50/40', 'dark:bg-emerald-950/30');
+          itemFb.className = 'mt-2.5 text-xs sm:text-sm font-bold text-emerald-700 dark:text-emerald-400';
+          itemFb.innerHTML = `✓ Correct! "${item.canonical}"`;
+        } else {
+          card.classList.add('border-rose-400', 'dark:border-rose-600', 'bg-rose-50/40', 'dark:bg-rose-950/30');
+          itemFb.className = 'mt-2.5 text-xs sm:text-sm font-bold text-rose-700 dark:text-rose-400';
+          itemFb.innerHTML = `✗ Incorrect. Correct sentence: <span class="underline">${item.canonical}</span>`;
+        }
+      });
+
+      state.checked[4] = true;
+      const pct = Math.round((correctCount / act4Items.length) * 100);
+      state.scores[4] = {
+        earned: correctCount,
+        max: act4Items.length,
+        pct,
+        details: `${correctCount} out of ${act4Items.length} dictation sentences accurate.`
+      };
+
+      const btn = document.getElementById('check-btn-4');
+      btn.disabled = true;
+      btn.classList.add('opacity-50', 'cursor-not-allowed');
+      btn.textContent = 'Answers Checked ✓';
+
+      const badge = document.getElementById('badge-act4');
+      badge.textContent = `Checked • ${correctCount}/8 (${pct}%)`;
+      badge.className = 'px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-300';
+
+      const fb = document.getElementById('feedback-act4');
+      fb.classList.remove('hidden');
+      fb.className = 'mt-4 p-4 rounded-xl text-sm sm:text-base font-bold bg-amber-50 text-amber-900 border border-amber-300 dark:bg-amber-950/60 dark:text-amber-200 dark:border-amber-800';
+      fb.innerHTML = `Activity 4 Complete! You scored ${correctCount} out of 8 (${pct}%).`;
+
+      renderNavPills();
+      updateProgress();
+    }
+
+    /* =========================================================================
+       6. ACTIVITY 5: 24-SQUARE IMAGE3 DRAG-AND-DROP PUZZLE + TIMER + DO AGAIN
+       ========================================================================= */
+    function initImage3Puzzle() {
+      const img = new Image();
+      const extensions = ['Image3.jpg', 'Image3.png', 'Image3.jpeg', 'Image3.webp'];
+      let extIndex = 0;
+
+      img.onload = () => {
+        state.puzzle.imageLoaded = img;
+        drawTargetReference(img);
+        setupPuzzlePieces();
+      };
+
+      img.onerror = () => {
+        extIndex++;
+        if (extIndex < extensions.length) {
+          img.src = extensions[extIndex];
+        } else {
+          // Generate vibrant high-res fallback artwork so 24-piece puzzle always works
+          const fallbackCanvas = createFallbackArtworkCanvas();
+          state.puzzle.imageLoaded = fallbackCanvas;
+          drawTargetReference(fallbackCanvas);
+          setupPuzzlePieces();
+        }
+      };
+
+      img.src = extensions[0];
+    }
+
+    function createFallbackArtworkCanvas() {
+      const c = document.createElement('canvas');
+      c.width = 720;
+      c.height = 480;
+      const ctx = c.getContext('2d');
+
+      // Sky gradient
+      const sky = ctx.createLinearGradient(0, 0, 0, 340);
+      sky.addColorStop(0, '#0284c7');
+      sky.addColorStop(0.6, '#38bdf8');
+      sky.addColorStop(1, '#bae6fd');
+      ctx.fillStyle = sky;
+      ctx.fillRect(0, 0, 720, 480);
+
+      // Sun
+      ctx.fillStyle = '#fde047';
+      ctx.beginPath();
+      ctx.arc(590, 95, 48, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Mountains
+      ctx.fillStyle = '#475569';
+      ctx.beginPath();
+      ctx.moveTo(0, 340);
+      ctx.lineTo(170, 140);
+      ctx.lineTo(350, 340);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.fillStyle = '#334155';
+      ctx.beginPath();
+      ctx.moveTo(220, 340);
+      ctx.lineTo(430, 110);
+      ctx.lineTo(660, 340);
+      ctx.closePath();
+      ctx.fill();
+
+      // Snow caps
+      ctx.fillStyle = '#f8fafc';
+      ctx.beginPath();
+      ctx.moveTo(170, 140);
+      ctx.lineTo(132, 185);
+      ctx.lineTo(170, 175);
+      ctx.lineTo(208, 185);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.moveTo(430, 110);
+      ctx.lineTo(382, 168);
+      ctx.lineTo(430, 154);
+      ctx.lineTo(478, 168);
+      ctx.closePath();
+      ctx.fill();
+
+      // Green Valley & River
+      ctx.fillStyle = '#16a34a';
+      ctx.fillRect(0, 340, 720, 140);
+
+      ctx.fillStyle = '#0ea5e9';
+      ctx.beginPath();
+      ctx.moveTo(310, 340);
+      ctx.bezierCurveTo(250, 390, 430, 420, 360, 480);
+      ctx.lineTo(460, 480);
+      ctx.bezierCurveTo(510, 420, 330, 390, 370, 340);
+      ctx.closePath();
+      ctx.fill();
+
+      // Banner Text
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.72)';
+      ctx.fillRect(110, 395, 500, 52);
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 24px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Mr. Rocha’s English Class • Image 3', 360, 429);
+
+      return c;
+    }
+
+    function drawTargetReference(source) {
+      const targetCanvas = document.getElementById('target-image3-canvas');
+      targetCanvas.width = 480;
+      targetCanvas.height = 320;
+      const ctx = targetCanvas.getContext('2d');
+      ctx.clearRect(0, 0, 480, 320);
+      ctx.drawImage(source, 0, 0, 480, 320);
+    }
+
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function setupPuzzlePieces() {
+      const allIndices = Array.from({ length: 24 }, (_, i) => i);
+      state.puzzle.board = new Array(24).fill(null);
+      state.puzzle.tray = shuffleArray(allIndices);
+      state.puzzle.selectedPiece = null;
+      renderPuzzleUI();
+    }
+
+    function createPieceCanvas(pieceIndex, sizePx = 110) {
+      const canvas = document.createElement('canvas');
+      canvas.width = sizePx;
+      canvas.height = sizePx;
+      canvas.className = 'w-full h-full object-cover block rounded';
+      const ctx = canvas.getContext('2d');
+      const source = state.puzzle.imageLoaded;
+      if (!source) return canvas;
+
+      const srcW = source.width || source.naturalWidth || 720;
+      const srcH = source.height || source.naturalHeight || 480;
+      const col = pieceIndex % state.puzzle.cols;
+      const row = Math.floor(pieceIndex / state.puzzle.cols);
+      const cellW = srcW / state.puzzle.cols;
+      const cellH = srcH / state.puzzle.rows;
+
+      ctx.drawImage(
+        source,
+        col * cellW,
+        row * cellH,
+        cellW,
+        cellH,
+        0,
+        0,
+        sizePx,
+        sizePx
+      );
+      return canvas;
+    }
+
+    function renderPuzzleUI() {
+      const boardGrid = document.getElementById('puzzle-board-grid');
+      const trayGrid = document.getElementById('puzzle-tray-grid');
+      const locked = state.checked[5];
+
+      boardGrid.innerHTML = '';
+      for (let slotIdx = 0; slotIdx < 24; slotIdx++) {
+        const pieceId = state.puzzle.board[slotIdx];
+        const slotDiv = document.createElement('div');
+        slotDiv.className =
+          'puzzle-slot relative rounded bg-slate-200/90 dark:bg-slate-800 border border-dashed border-slate-400 dark:border-slate-600 flex items-center justify-center overflow-hidden';
+
+        if (
+          state.puzzle.selectedPiece &&
+          state.puzzle.selectedPiece.source === 'board' &&
+          state.puzzle.selectedPiece.index === slotIdx
+        ) {
+          slotDiv.classList.add('ring-4', 'ring-amber-400');
+        }
+
+        if (locked && pieceId !== null) {
+          if (pieceId === slotIdx) {
+            slotDiv.classList.add('ring-2', 'ring-emerald-500');
+          } else {
+            slotDiv.classList.add('ring-2', 'ring-rose-500');
+          }
+        }
+
+        if (!locked) {
+          slotDiv.ondragover = e => e.preventDefault();
+          slotDiv.ondrop = e => {
+            e.preventDefault();
+            handlePuzzleDrop('board', slotIdx);
+          };
+          slotDiv.onclick = () => handlePuzzleClick('board', slotIdx);
+        }
+
+        if (pieceId !== null) {
+          const pieceCanvas = createPieceCanvas(pieceId, 110);
+          pieceCanvas.classList.add('puzzle-piece');
+          if (!locked) {
+            pieceCanvas.draggable = true;
+            pieceCanvas.ondragstart = e => {
+              state.puzzle.selectedPiece = { source: 'board', index: slotIdx, pieceId };
+              e.dataTransfer?.setData('text/plain', String(pieceId));
+            };
+          }
+          slotDiv.appendChild(pieceCanvas);
+        } else {
+          const numHint = document.createElement('span');
+          numHint.className = 'text-[10px] font-bold text-slate-400 dark:text-slate-500 pointer-events-none';
+          numHint.textContent = slotIdx + 1;
+          slotDiv.appendChild(numHint);
+        }
+
+        boardGrid.appendChild(slotDiv);
+      }
+
+      // Render Shuffled Tray
+      trayGrid.innerHTML = '';
+      if (!locked) {
+        trayGrid.ondragover = e => e.preventDefault();
+        trayGrid.ondrop = e => {
+          e.preventDefault();
+          handlePuzzleDrop('tray', -1);
+        };
+      }
+
+      state.puzzle.tray.forEach((pieceId, trayIdx) => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'aspect-square rounded overflow-hidden border border-slate-300 dark:border-slate-600 shadow-sm bg-white dark:bg-slate-900';
+        if (
+          state.puzzle.selectedPiece &&
+          state.puzzle.selectedPiece.source === 'tray' &&
+          state.puzzle.selectedPiece.index === trayIdx
+        ) {
+          wrapper.classList.add('ring-4', 'ring-amber-400', 'scale-105');
+        }
+
+        const pieceCanvas = createPieceCanvas(pieceId, 100);
+        pieceCanvas.classList.add('puzzle-piece');
+        if (!locked) {
+          pieceCanvas.draggable = true;
+          pieceCanvas.ondragstart = e => {
+            state.puzzle.selectedPiece = { source: 'tray', index: trayIdx, pieceId };
+            e.dataTransfer?.setData('text/plain', String(pieceId));
+          };
+          wrapper.onclick = e => {
+            e.stopPropagation();
+            handlePuzzleClick('tray', trayIdx);
+          };
+        }
+        wrapper.appendChild(pieceCanvas);
+        trayGrid.appendChild(wrapper);
+      });
+
+      const placedCount = state.puzzle.board.filter(x => x !== null).length;
+      document.getElementById('puzzle-placed-count').textContent = `${placedCount} / 24 Placed`;
+      updateProgress();
+    }
+
+    function handlePuzzleDrop(targetType, targetIndex) {
+      if (state.checked[5] || !state.puzzle.selectedPiece) return;
+      if (!state.puzzle.timerStarted) startPuzzleTimer();
+
+      const sel = state.puzzle.selectedPiece;
+
+      if (targetType === 'board') {
+        const existingInTarget = state.puzzle.board[targetIndex];
+        if (sel.source === 'tray') {
+          // Move from tray to board slot; if occupied, send existing back to tray
+          state.puzzle.tray.splice(sel.index, 1);
+          if (existingInTarget !== null) {
+            state.puzzle.tray.push(existingInTarget);
+          }
+          state.puzzle.board[targetIndex] = sel.pieceId;
+        } else if (sel.source === 'board') {
+          // Swap two board slots
+          state.puzzle.board[sel.index] = existingInTarget;
+          state.puzzle.board[targetIndex] = sel.pieceId;
+        }
+      } else if (targetType === 'tray' && sel.source === 'board') {
+        state.puzzle.board[sel.index] = null;
+        state.puzzle.tray.push(sel.pieceId);
+      }
+
+      state.puzzle.selectedPiece = null;
+      renderPuzzleUI();
+      checkAutoSolvePuzzle();
+    }
+
+    function handlePuzzleClick(targetType, targetIndex) {
+      if (state.checked[5]) return;
+      if (!state.puzzle.timerStarted) startPuzzleTimer();
+
+      const sel = state.puzzle.selectedPiece;
+
+      // If nothing selected yet, select clicked piece
+      if (!sel) {
+        if (targetType === 'tray') {
+          state.puzzle.selectedPiece = {
+            source: 'tray',
+            index: targetIndex,
+            pieceId: state.puzzle.tray[targetIndex]
+          };
+        } else if (targetType === 'board' && state.puzzle.board[targetIndex] !== null) {
+          state.puzzle.selectedPiece = {
+            source: 'board',
+            index: targetIndex,
+            pieceId: state.puzzle.board[targetIndex]
+          };
+        }
+        renderPuzzleUI();
+        return;
+      }
+
+      // Clicking the same item deselects it
+      if (sel.source === targetType && sel.index === targetIndex) {
+        state.puzzle.selectedPiece = null;
+        renderPuzzleUI();
+        return;
+      }
+
+      // If clicking another tray piece while a tray piece is selected, switch selection
+      if (targetType === 'tray' && sel.source === 'tray') {
+        state.puzzle.selectedPiece = {
+          source: 'tray',
+          index: targetIndex,
+          pieceId: state.puzzle.tray[targetIndex]
+        };
+        renderPuzzleUI();
+        return;
+      }
+
+      // Otherwise perform move/swap
+      handlePuzzleDrop(targetType, targetIndex);
+    }
+
+    function checkAutoSolvePuzzle() {
+      const isSolved = state.puzzle.board.every((pieceId, idx) => pieceId === idx);
+      if (isSolved && state.puzzle.timerInterval) {
+        clearInterval(state.puzzle.timerInterval);
+        state.puzzle.timerInterval = null;
+      }
+    }
+
+    function startPuzzleTimer() {
+      if (state.puzzle.timerInterval || state.checked[5]) return;
+      state.puzzle.timerStarted = true;
+      state.puzzle.timerInterval = setInterval(() => {
+        state.puzzle.timerSeconds++;
+        const mins = String(Math.floor(state.puzzle.timerSeconds / 60)).padStart(2, '0');
+        const secs = String(state.puzzle.timerSeconds % 60).padStart(2, '0');
+        document.getElementById('puzzle-timer').textContent = `${mins}:${secs}`;
+      }, 1000);
+    }
+
+    function resetPuzzle() {
+      if (state.checked[5]) return;
+      if (state.puzzle.timerInterval) {
+        clearInterval(state.puzzle.timerInterval);
+        state.puzzle.timerInterval = null;
+      }
+      state.puzzle.timerSeconds = 0;
+      state.puzzle.timerStarted = false;
+      document.getElementById('puzzle-timer').textContent = '00:00';
+      setupPuzzlePieces();
+      startPuzzleTimer();
+    }
+
+    function checkActivity5() {
+      if (state.checked[5]) return;
+
+      if (state.puzzle.timerInterval) {
+        clearInterval(state.puzzle.timerInterval);
+        state.puzzle.timerInterval = null;
+      }
+
+      let correctSquares = 0;
+      state.puzzle.board.forEach((pieceId, slotIdx) => {
+        if (pieceId === slotIdx) correctSquares++;
+      });
+
+      state.checked[5] = true;
+      state.puzzle.selectedPiece = null;
+      const pct = Math.round((correctSquares / 24) * 100);
+      const timeStr = document.getElementById('puzzle-timer').textContent;
+
+      state.scores[5] = {
+        earned: correctSquares,
+        max: 24,
+        pct,
+        details: `${correctSquares} of 24 puzzle squares placed accurately in ${timeStr}.`
+      };
+
+      // Lock Check Answers & Do Again buttons
+      const checkBtn = document.getElementById('check-btn-5');
+      checkBtn.disabled = true;
+      checkBtn.classList.add('opacity-50', 'cursor-not-allowed');
+      checkBtn.textContent = 'Answers Checked ✓';
+
+      const againBtn = document.getElementById('puzzle-do-again-btn');
+      againBtn.disabled = true;
+      againBtn.classList.add('opacity-50', 'cursor-not-allowed');
+
+      const badge = document.getElementById('badge-act5');
+      badge.textContent = `Checked • ${correctSquares}/24 (${pct}%)`;
+      badge.className = 'px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-300';
+
+      const fb = document.getElementById('feedback-act5');
+      fb.classList.remove('hidden');
+      fb.className = 'mt-4 p-4 rounded-xl text-sm sm:text-base font-bold bg-pink-50 text-pink-900 border border-pink-300 dark:bg-pink-950/60 dark:text-pink-200 dark:border-pink-800';
+      fb.innerHTML = `Puzzle Checked! You placed <strong>${correctSquares} / 24</strong> squares in their exact positions (Time: ${timeStr}). Green borders show correctly placed pieces; red borders show misplaced pieces.`;
+
+      renderPuzzleUI();
+      renderNavPills();
+      updateProgress();
+    }
+
+    /* =========================================================================
+       7. ACTIVITY 6: LISTEN AND READ ("LANDMARKS AROUND THE WORLD")
+       ========================================================================= */
+    function renderActivity6() {
+      const container = document.getElementById('act6-questions-container');
+      container.innerHTML = act6Questions.map(q => `
+        <div id="act6-card-${q.id}" class="p-5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-800/50">
+          <p class="font-bold text-base text-slate-900 dark:text-white mb-3">${q.question}</p>
+          <div class="space-y-2.5">
+            ${Object.entries(q.options).map(([letter, text]) => `
+              <label
+                id="act6-opt-${q.id}-${letter}"
+                class="flex items-start gap-3 p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-sky-400 cursor-pointer transition"
+              >
+                <input
+                  type="radio"
+                  name="act6-q${q.id}"
+                  value="${letter}"
+                  onchange="highlightSelectedRadio(${q.id}, '${letter}'); updateProgress();"
+                  class="mt-1 w-4 h-4 text-sky-600 focus:ring-sky-500"
+                />
+                <span class="text-sm sm:text-base text-slate-800 dark:text-slate-200">
+                  <strong class="text-sky-700 dark:text-sky-400">${letter}.</strong> ${text}
+                </span>
+              </label>
+            `).join('')}
+          </div>
+          <div id="act6-item-fb-${q.id}" class="hidden mt-3 text-xs sm:text-sm font-semibold"></div>
+        </div>
+      `).join('');
+    }
+
+    function highlightSelectedRadio(qId, selectedLetter) {
+      ['A', 'B', 'C', 'D'].forEach(letter => {
+        const lbl = document.getElementById(`act6-opt-${qId}-${letter}`);
+        if (lbl) {
+          lbl.classList.remove('shiny-blue-box');
+          if (letter === selectedLetter) {
+            lbl.classList.add('shiny-blue-box');
+          }
+        }
+      });
+    }
+
+    function readPassageAloud() {
+      const passage = `Landmarks Around the World. Landmarks tell us who we are and where we come from. Millions of travelers visit them every year because they want to see history with their own eyes. Many people believe that the Great Wall of China is the longest human-made structure ever built. Its builders hoped that the wall would protect the northern borders, although historians still debate how effective it was. Other landmarks show what people can achieve with imagination. Some Parisian artists criticized the Eiffel Tower when it opened in 1889, yet nobody could have predicted that it would become the symbol of France. Today, whoever climbs its stairs can enjoy a view of the entire city. In India, the Taj Mahal reminds visitors how deeply an emperor loved his wife, since he ordered it built in her memory. Some landmarks are natural wonders. Scientists explain that the Grand Canyon was carved by the Colorado River over millions of years. Visitors often wonder how water alone could create such an enormous space. In Peru, archaeologists still ask why the Incas built Machu Picchu so high in the Andes, and nobody knows for certain. Protecting these places is a global responsibility. Experts warn that too many tourists can damage fragile sites. What each visitor does matters, so travelers should respect the rules and leave nothing behind. Whether we visit them in person or learn about them online, landmarks remind us that our shared heritage deserves care.`;
+      speakText(passage, 0.95);
+    }
+
+    function checkActivity6() {
+      if (state.checked[6]) return;
+      let correctCount = 0;
+
+      act6Questions.forEach(q => {
+        const selected = document.querySelector(`input[name="act6-q${q.id}"]:checked`);
+        const userAns = selected ? selected.value : null;
+        const card = document.getElementById(`act6-card-${q.id}`);
+        const itemFb = document.getElementById(`act6-item-fb-${q.id}`);
+
+        // Disable all radios for this question
+        document.querySelectorAll(`input[name="act6-q${q.id}"]`).forEach(r => {
+          r.disabled = true;
+        });
+        ['A', 'B', 'C', 'D'].forEach(letter => {
+          const lbl = document.getElementById(`act6-opt-${q.id}-${letter}`);
+          lbl.classList.add('cursor-not-allowed');
+          if (letter === q.correct) {
+            lbl.classList.add('bg-emerald-50', 'dark:bg-emerald-950/50', 'border-emerald-500');
+          } else if (letter === userAns && userAns !== q.correct) {
+            lbl.classList.add('bg-rose-50', 'dark:bg-rose-950/50', 'border-rose-500');
+          }
+        });
+
+        itemFb.classList.remove('hidden');
+        if (userAns === q.correct) {
+          correctCount++;
+          card.classList.add('border-emerald-400', 'dark:border-emerald-600');
+          itemFb.className = 'mt-3 text-xs sm:text-sm font-bold text-emerald-700 dark:text-emerald-400';
+          itemFb.innerHTML = `✓ Correct (${q.correct})! ${q.explanation}`;
+        } else {
+          card.classList.add('border-rose-400', 'dark:border-rose-600');
+          itemFb.className = 'mt-3 text-xs sm:text-sm font-bold text-rose-700 dark:text-rose-400';
+          itemFb.innerHTML = `✗ Incorrect. The correct answer is <strong>${q.correct}</strong>. ${q.explanation}`;
+        }
+      });
+
+      state.checked[6] = true;
+      const pct = Math.round((correctCount / act6Questions.length) * 100);
+      state.scores[6] = {
+        earned: correctCount,
+        max: act6Questions.length,
+        pct,
+        details: `${correctCount} out of ${act6Questions.length} reading comprehension questions correct.`
+      };
+
+      const btn = document.getElementById('check-btn-6');
+      btn.disabled = true;
+      btn.classList.add('opacity-50', 'cursor-not-allowed');
+      btn.textContent = 'Answers Checked ✓';
+
+      const badge = document.getElementById('badge-act6');
+      badge.textContent = `Checked • ${correctCount}/6 (${pct}%)`;
+      badge.className = 'px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-300';
+
+      const fb = document.getElementById('feedback-act6');
+      fb.classList.remove('hidden');
+      fb.className = 'mt-4 p-4 rounded-xl text-sm sm:text-base font-bold bg-teal-50 text-teal-900 border border-teal-300 dark:bg-teal-950/60 dark:text-teal-200 dark:border-teal-800';
+      fb.innerHTML = `Activity 6 Complete! You scored ${correctCount} out of 6 (${pct}%).`;
+
+      renderNavPills();
+      updateProgress();
+    }
+
+    /* =========================================================================
+       8. ACTIVITY 7: 10 SCRAMBLED NOUN CLAUSE SENTENCES (DRAG/DROP + AUDIO)
+       ========================================================================= */
+    let draggedWordInfo = null; // { sentenceIdx, from: 'bank'|'answer', wordIdx }
+
+    function renderActivity7() {
+      // Initialize shuffled word banks
+      state.act7.wordBanks = act7Sentences.map(s => {
+        const objs = s.words.map((w, idx) => ({ id: `${s.id}-${idx}`, text: w }));
+        let shuffled = shuffleArray(objs);
+        // Ensure not accidentally identical to solution
+        if (shuffled.map(x => x.text).join(' ') === s.sentence) {
+          shuffled = shuffled.reverse();
+        }
+        return shuffled;
+      });
+      state.act7.userOrders = act7Sentences.map(() => []);
+
+      const container = document.getElementById('act7-sentences-container');
+      container.innerHTML = act7Sentences.map((s, sIdx) => `
+        <div id="act7-card-${s.id}" class="p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50/70 dark:bg-slate-800/50">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+            <div class="flex items-center gap-2">
+              <span class="w-7 h-7 rounded-lg bg-violet-600 text-white text-xs font-extrabold flex items-center justify-center">${s.id}</span>
+              <span class="text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-md bg-violet-100 text-violet-800 dark:bg-violet-900/50 dark:text-violet-300">
+                Clause Marker: "${s.marker}"
+              </span>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button
+                type="button"
+                onclick="speakText('${s.sentence.replace(/'/g, "\\'")}', 0.9)"
+                class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold bg-violet-600 hover:bg-violet-700 text-white shadow-sm transition"
+              >
+                <span>🔊 Listen to Sentence</span>
+              </button>
+              <button
+                id="act7-clear-${sIdx}"
+                type="button"
+                onclick="clearSentence7(${sIdx})"
+                class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 transition"
+              >
+                Reset
+              </button>
+            </div>
+          </div>
+
+          <!-- Shiny Blue Answer Drop Zone -->
+          <div class="mb-3">
+            <span class="block text-xs font-bold text-slate-500 dark:text-slate-400 mb-1">Your Sentence (Drag or Tap words here in order):</span>
+            <div
+              id="act7-answer-zone-${sIdx}"
+              ondragover="event.preventDefault()"
+              ondrop="handleWordDrop(event, ${sIdx}, 'answer')"
+              class="shiny-blue-box min-h-[54px] p-2.5 rounded-xl bg-white dark:bg-slate-900 flex flex-wrap items-center gap-2"
+            ></div>
+          </div>
+
+          <!-- Shuffled Word Bank -->
+          <div>
+            <span class="block text-xs font-bold text-slate-500 dark:text-slate-400 mb-1">Shuffled Words:</span>
+            <div
+              id="act7-bank-zone-${sIdx}"
+              ondragover="event.preventDefault()"
+              ondrop="handleWordDrop(event, ${sIdx}, 'bank')"
+              class="min-h-[48px] p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 flex flex-wrap items-center gap-2"
+            ></div>
+          </div>
+
+          <div id="act7-item-fb-${s.id}" class="hidden mt-3 text-xs sm:text-sm font-semibold"></div>
+        </div>
+      `).join('');
+
+      act7Sentences.forEach((_, sIdx) => refreshSentence7Zones(sIdx));
+    }
+
+    function refreshSentence7Zones(sIdx) {
+      const answerZone = document.getElementById(`act7-answer-zone-${sIdx}`);
+      const bankZone = document.getElementById(`act7-bank-zone-${sIdx}`);
+      const locked = state.checked[7];
+
+      answerZone.innerHTML = '';
+      if (state.act7.userOrders[sIdx].length === 0) {
+        answerZone.innerHTML = `<span class="text-xs text-slate-400 dark:text-slate-500 italic">Drop or tap words below to build sentence #${sIdx + 1}...</span>`;
+      } else {
+        state.act7.userOrders[sIdx].forEach((wordObj, wIdx) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.textContent = wordObj.text;
+          btn.className =
+            'word-tile px-3 py-1.5 rounded-lg text-sm font-bold bg-sky-600 text-white shadow-sm hover:bg-sky-700';
+          if (!locked) {
+            btn.draggable = true;
+            btn.ondragstart = () => {
+              draggedWordInfo = { sentenceIdx: sIdx, from: 'answer', wordIdx: wIdx };
+            };
+            btn.onclick = () => moveWord7(sIdx, 'answer', wIdx);
+          } else {
+            btn.disabled = true;
+            btn.classList.add('cursor-not-allowed', 'opacity-90');
+          }
+          answerZone.appendChild(btn);
+        });
+      }
+
+      bankZone.innerHTML = '';
+      state.act7.wordBanks[sIdx].forEach((wordObj, wIdx) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.textContent = wordObj.text;
+        btn.className =
+          'word-tile px-3 py-1.5 rounded-lg text-sm font-bold bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-100 border border-slate-300 dark:border-slate-600 shadow-sm hover:border-sky-500';
+        if (!locked) {
+          btn.draggable = true;
+          btn.ondragstart = () => {
+            draggedWordInfo = { sentenceIdx: sIdx, from: 'bank', wordIdx: wIdx };
+          };
+          btn.onclick = () => moveWord7(sIdx, 'bank', wIdx);
+        } else {
+          btn.disabled = true;
+          btn.classList.add('cursor-not-allowed', 'opacity-70');
+        }
+        bankZone.appendChild(btn);
+      });
+
+      updateProgress();
+    }
+
+    function moveWord7(sIdx, from, wordIdx) {
+      if (state.checked[7]) return;
+      if (from === 'bank') {
+        const [word] = state.act7.wordBanks[sIdx].splice(wordIdx, 1);
+        if (word) state.act7.userOrders[sIdx].push(word);
+      } else {
+        const [word] = state.act7.userOrders[sIdx].splice(wordIdx, 1);
+        if (word) state.act7.wordBanks[sIdx].push(word);
+      }
+      refreshSentence7Zones(sIdx);
+    }
+
+    function handleWordDrop(event, targetSentenceIdx, targetZone) {
+      event.preventDefault();
+      if (state.checked[7] || !draggedWordInfo) return;
+      if (draggedWordInfo.sentenceIdx !== targetSentenceIdx) return;
+
+      const { from, wordIdx } = draggedWordInfo;
+      if (from !== targetZone) {
+        moveWord7(targetSentenceIdx, from, wordIdx);
+      }
+      draggedWordInfo = null;
+    }
+
+    function clearSentence7(sIdx) {
+      if (state.checked[7]) return;
+      state.act7.wordBanks[sIdx].push(...state.act7.userOrders[sIdx]);
+      state.act7.userOrders[sIdx] = [];
+      refreshSentence7Zones(sIdx);
+    }
+
+    function checkActivity7() {
+      if (state.checked[7]) return;
+      let correctCount = 0;
+
+      act7Sentences.forEach((s, sIdx) => {
+        const built = state.act7.userOrders[sIdx].map(w => w.text).join(' ').trim();
+        const card = document.getElementById(`act7-card-${s.id}`);
+        const itemFb = document.getElementById(`act7-item-fb-${s.id}`);
+        const resetBtn = document.getElementById(`act7-clear-${sIdx}`);
+
+        if (resetBtn) {
+          resetBtn.disabled = true;
+          resetBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        }
+
+        const isCorrect = built === s.sentence;
+        itemFb.classList.remove('hidden');
+
+        if (isCorrect) {
+          correctCount++;
+          card.classList.add('border-emerald-400', 'dark:border-emerald-600', 'bg-emerald-50/40', 'dark:bg-emerald-950/30');
+          itemFb.className = 'mt-3 text-xs sm:text-sm font-bold text-emerald-700 dark:text-emerald-400';
+          itemFb.innerHTML = `✓ Perfect! "${s.sentence}"`;
+        } else {
+          card.classList.add('border-rose-400', 'dark:border-rose-600', 'bg-rose-50/40', 'dark:bg-rose-950/30');
+          itemFb.className = 'mt-3 text-xs sm:text-sm font-bold text-rose-700 dark:text-rose-400';
+          itemFb.innerHTML = `✗ Incorrect. Target sentence: <span class="underline">${s.sentence}</span>`;
+        }
+      });
+
+      state.checked[7] = true;
+      const pct = Math.round((correctCount / act7Sentences.length) * 100);
+      state.scores[7] = {
+        earned: correctCount,
+        max: act7Sentences.length,
+        pct,
+        details: `${correctCount} out of ${act7Sentences.length} scrambled sentences built accurately.`
+      };
+
+      const btn = document.getElementById('check-btn-7');
+      btn.disabled = true;
+      btn.classList.add('opacity-50', 'cursor-not-allowed');
+      btn.textContent = 'Answers Checked ✓';
+
+      const badge = document.getElementById('badge-act7');
+      badge.textContent = `Checked • ${correctCount}/10 (${pct}%)`;
+      badge.className = 'px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-300';
+
+      const fb = document.getElementById('feedback-act7');
+      fb.classList.remove('hidden');
+      fb.className = 'mt-4 p-4 rounded-xl text-sm sm:text-base font-bold bg-violet-50 text-violet-900 border border-violet-300 dark:bg-violet-950/60 dark:text-violet-200 dark:border-violet-800';
+      fb.innerHTML = `Activity 7 Complete! You built ${correctCount} out of 10 sentences properly (${pct}%).`;
+
+      act7Sentences.forEach((_, sIdx) => refreshSentence7Zones(sIdx));
+      renderNavPills();
+      updateProgress();
+    }
+
+    /* =========================================================================
+       9. SUBMIT WORKSHEET, ANALYTICS, CHARTS, 8 RECOMMENDATIONS & PRINT
+       ========================================================================= */
+    function evaluateUncheckedActivitiesQuietly() {
+      // Allows checking results even if user has not completed or clicked Check on all activities
+      if (!state.checked[1]) {
+        const res = evaluateWrittenResponse(document.getElementById('act1-response').value);
+        state.scores[1] = { earned: res.score, max: 10, pct: res.score * 10, details: res.message };
+      }
+      if (!state.checked[2]) {
+        const res = evaluateWrittenResponse(document.getElementById('act2-response').value);
+        state.scores[2] = { earned: res.score, max: 10, pct: res.score * 10, details: res.message };
+      }
+      if (!state.checked[3]) {
+        let c = 0;
+        act3Questions.forEach(q => {
+          const val = normalizeText(document.getElementById(`act3-input-${q.id}`).value);
+          if (q.answers.some(ans => normalizeText(ans) === val)) c++;
+        });
+        state.scores[3] = {
+          earned: c,
+          max: 20,
+          pct: Math.round((c / 20) * 100),
+          details: `${c} of 20 grammar sentences completed accurately.`
+        };
+      }
+      if (!state.checked[4]) {
+        let c = 0;
+        act4Items.forEach(item => {
+          const val = normalizeText(document.getElementById(`act4-input-${item.id}`).value);
+          if (item.accepted.some(acc => normalizeText(acc) === val)) c++;
+        });
+        state.scores[4] = {
+          earned: c,
+          max: 8,
+          pct: Math.round((c / 8) * 100),
+          details: `${c} of 8 dictation sentences accurate.`
+        };
+      }
+      if (!state.checked[5]) {
+        let c = 0;
+        state.puzzle.board.forEach((pid, idx) => {
+          if (pid === idx) c++;
+        });
+        state.scores[5] = {
+          earned: c,
+          max: 24,
+          pct: Math.round((c / 24) * 100),
+          details: `${c} of 24 puzzle squares placed accurately.`
+        };
+      }
+      if (!state.checked[6]) {
+        let c = 0;
+        act6Questions.forEach(q => {
+          const sel = document.querySelector(`input[name="act6-q${q.id}"]:checked`);
+          if (sel && sel.value === q.correct) c++;
+        });
+        state.scores[6] = {
+          earned: c,
+          max: 6,
+          pct: Math.round((c / 6) * 100),
+          details: `${c} of 6 reading comprehension questions correct.`
+        };
+      }
+      if (!state.checked[7]) {
+        let c = 0;
+        act7Sentences.forEach((s, idx) => {
+          const built = state.act7.userOrders[idx].map(w => w.text).join(' ').trim();
+          if (built === s.sentence) c++;
+        });
+        state.scores[7] = {
+          earned: c,
+          max: 10,
+          pct: Math.round((c / 10) * 100),
+          details: `${c} of 10 scrambled sentences built accurately.`
+        };
+      }
+    }
+
+    function submitWorksheet() {
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      evaluateUncheckedActivitiesQuietly();
+
+      state.currentSection = 8;
+      document.querySelectorAll('.activity-section').forEach(sec => sec.classList.add('hidden'));
+      const resultsSection = document.getElementById('results-section');
+      resultsSection.classList.remove('hidden');
+
+      // Student Info
+      const studentName = (document.getElementById('student-name').value || '').trim() || 'Student (Name Not Entered)';
+      const studentDate = (document.getElementById('student-date').value || '').trim() || 'Date Not Selected';
+      document.getElementById('report-student-name').textContent = studentName;
+      document.getElementById('report-student-date').textContent = studentDate;
+
+      // Calculate Overall Average across all 7 activities (equal weight per activity for balanced academic reporting)
+      const actKeys = [1, 2, 3, 4, 5, 6, 7];
+      const totalPctSum = actKeys.reduce((acc, k) => acc + state.scores[k].pct, 0);
+      const overallPct = Math.round(totalPctSum / actKeys.length);
+
+      document.getElementById('report-overall-score').textContent = `${overallPct}%`;
+
+      let grade = 'F';
+      if (overallPct >= 90) grade = 'A (Outstanding)';
+      else if (overallPct >= 80) grade = 'B (Proficient)';
+      else if (overallPct >= 70) grade = 'C (Developing)';
+      else if (overallPct >= 60) grade = 'D (Needs Review)';
+      else grade = 'Incomplete / Needs Practice';
+      document.getElementById('report-letter-grade').textContent = `Grade: ${grade}`;
+
+      // Personalized Teacher Overall Feedback
+      const uncheckedCount = actKeys.filter(k => !state.checked[k]).length;
+      let feedbackMsg = '';
+      if (overallPct >= 90) {
+        feedbackMsg = `Outstanding achievement, ${studentName}! You demonstrated strong command of noun clauses across writing, grammar, listening dictation, reading comprehension, and sentence structure.`;
+      } else if (overallPct >= 75) {
+        feedbackMsg = `Great effort, ${studentName}! You have a solid foundation in identifying and using noun clauses. Review the specific recommendations below to polish statement word order and listening accuracy.`;
+      } else if (overallPct >= 50) {
+        feedbackMsg = `Good progress, ${studentName}. You completed several sections well, and targeted practice on noun clause markers (that, whether, if, wh-words) will significantly boost your score.`;
+      } else {
+        feedbackMsg = `Thank you for submitting your worksheet, ${studentName}. ${uncheckedCount > 0 ? `Notice that ${uncheckedCount} activity section(s) were not fully completed or checked before submission.` : ''} Use Mr. Rocha’s 8 recommendations below to guide your review.`;
+      }
+      document.getElementById('report-overall-feedback').textContent = feedbackMsg;
+
+      // Render Activity Breakdown Cards
+      const actTitles = {
+        1: 'Act 1: Video Summary',
+        2: 'Act 2: Story Summary',
+        3: 'Act 3: 20 Noun Clauses',
+        4: 'Act 4: Audio Dictation',
+        5: 'Act 5: 24-Pc Puzzle',
+        6: 'Act 6: Landmarks Quiz',
+        7: 'Act 7: Word Scramble'
+      };
+      const cardColors = [
+        'from-indigo-500 to-blue-600',
+        'from-purple-500 to-fuchsia-600',
+        'from-sky-500 to-cyan-600',
+        'from-amber-500 to-orange-600',
+        'from-pink-500 to-rose-600',
+        'from-teal-500 to-emerald-600',
+        'from-violet-500 to-indigo-600'
+      ];
+
+      document.getElementById('report-activity-cards').innerHTML = actKeys.map((k, idx) => {
+        const s = state.scores[k];
+        return `
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 p-4 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <span class="text-xs font-extrabold text-slate-700 dark:text-slate-200">${actTitles[k]}</span>
+                <span class="px-2 py-0.5 rounded-full text-xs font-black text-white bg-gradient-to-r ${cardColors[idx]}">${s.pct}%</span>
+              </div>
+              <p class="text-lg font-extrabold text-slate-900 dark:text-white">${s.earned} / ${s.max}</p>
+              <p class="text-xs text-slate-600 dark:text-slate-400 mt-1 leading-snug">${s.details}</p>
+            </div>
+            <div class="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden mt-3">
+              <div class="h-full bg-gradient-to-r ${cardColors[idx]} rounded-full" style="width: ${s.pct}%"></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Render Skill Bars
+      const skills = [
+        {
+          label: 'Written Expression (Acts 1 & 2)',
+          pct: Math.round((state.scores[1].pct + state.scores[2].pct) / 2),
+          color: 'bg-indigo-500'
+        },
+        {
+          label: 'Grammar Construction (Act 3)',
+          pct: state.scores[3].pct,
+          color: 'bg-sky-500'
+        },
+        {
+          label: 'Listening & Dictation (Act 4)',
+          pct: state.scores[4].pct,
+          color: 'bg-amber-500'
+        },
+        {
+          label: 'Reading Comprehension (Act 6)',
+          pct: state.scores[6].pct,
+          color: 'bg-teal-500'
+        },
+        {
+          label: 'Syntax & Spatial Logic (Acts 5 & 7)',
+          pct: Math.round((state.scores[5].pct + state.scores[7].pct) / 2),
+          color: 'bg-pink-500'
+        }
+      ];
+
+      document.getElementById('results-skill-bars').innerHTML = skills.map(sk => `
+        <div>
+          <div class="flex justify-between text-xs font-bold mb-1">
+            <span class="text-slate-700 dark:text-slate-300">${sk.label}</span>
+            <span class="text-slate-900 dark:text-white">${sk.pct}%</span>
+          </div>
+          <div class="w-full h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+            <div class="h-full ${sk.color} rounded-full transition-all duration-500" style="width: ${sk.pct}%"></div>
+          </div>
+        </div>
+      `).join('');
+
+      // Generate 8 Specific Recommendations
+      generateEightRecommendations();
+
+      // Draw Charts
+      drawResultCharts();
+
+      renderNavPills();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function generateEightRecommendations() {
+      const s = state.scores;
+      const recs = [];
+
+      // 1. Activity 1 recommendation
+      if (s[1].pct >= 80) {
+        recs.push(`<strong>1. Video Synthesis (Activity 1 — ${s[1].pct}%):</strong> Strong summary skills! Challenge yourself further by combining two noun clauses in one complex reflection sentence.`);
+      } else {
+        recs.push(`<strong>1. Video Reflection Depth (Activity 1 — ${s[1].pct}%):</strong> Rewatch Video 1 and write 3–4 full sentences starting with <em>"The video explains how..."</em> or <em>"What I learned is that..."</em>.`);
+      }
+
+      // 2. Activity 2 recommendation
+      if (s[2].pct >= 80) {
+        recs.push(`<strong>2. Story Comprehension (Activity 2 — ${s[2].pct}%):</strong> Great job summarizing the visual narrative! Keep using reporting verbs like <em>shows, reveals,</em> and <em>proves</em> followed by <em>that</em>-clauses.`);
+      } else {
+        recs.push(`<strong>2. Visual Story Retelling (Activity 2 — ${s[2].pct}%):</strong> Look closely at the characters and events in Image 2, then summarize the main plot using <em>"The story shows why..."</em>.`);
+      }
+
+      // 3. Activity 3 recommendation
+      if (s[3].pct >= 80) {
+        recs.push(`<strong>3. Statement Word Order Mastery (Activity 3 — ${s[3].pct}%):</strong> Excellent grammar accuracy across affirmative, negative, and interrogative sentences. Maintain Subject + Verb order inside every embedded clause.`);
+      } else {
+        recs.push(`<strong>3. Practice Embedded Word Order (Activity 3 — ${s[3].pct}%):</strong> Review the Activity 3 grammar chart—avoid question inversion inside noun clauses (write <em>"where she lives"</em> instead of <em>"where does she live"</em>).`);
+      }
+
+      // 4. Activity 4 recommendation
+      if (s[4].pct >= 80) {
+        recs.push(`<strong>4. Listening &amp; Contraction Accuracy (Activity 4 — ${s[4].pct}%):</strong> Sharp listening ear! Your transcription of contractions (<em>doesn't, didn't, can't</em>) and clause markers was highly accurate.`);
+      } else {
+        recs.push(`<strong>4. Dictation &amp; Auxiliary Verbs (Activity 4 — ${s[4].pct}%):</strong> Replay Audios 1–8 and listen specifically for negative auxiliaries (<em>doesn't, didn't, can't</em>) and <em>whether/if</em> clauses.`);
+      }
+
+      // 5. Activity 5 recommendation
+      if (s[5].pct >= 80) {
+        recs.push(`<strong>5. Visual-Spatial Focus (Activity 5 — ${s[5].pct}%):</strong> Impressive visual focus on the 24-piece puzzle! Strong visual pattern recognition supports reading comprehension of complex texts.`);
+      } else {
+        recs.push(`<strong>5. Corner &amp; Edge Strategy (Activity 5 — ${s[5].pct}%):</strong> When solving the 24-square puzzle, match the 4 corner pieces and top horizon line first against the Target Image reference.`);
+      }
+
+      // 6. Activity 6 recommendation
+      if (s[6].pct >= 80) {
+        recs.push(`<strong>6. Academic Reading &amp; Clause Functions (Activity 6 — ${s[6].pct}%):</strong> You accurately identified both main ideas and how <em>"whoever climbs its stairs"</em> acts as a subject noun clause.`);
+      } else {
+        recs.push(`<strong>6. Text Evidence &amp; Subject Clauses (Activity 6 — ${s[6].pct}%):</strong> Re-read "Landmarks Around the World" and highlight every clause starting with <em>that, how, why,</em> and <em>whoever</em> to see how they carry key facts.`);
+      }
+
+      // 7. Activity 7 recommendation
+      if (s[7].pct >= 80) {
+        recs.push(`<strong>7. Sentence Syntax &amp; Clause Markers (Activity 7 — ${s[7].pct}%):</strong> Great work assembling all 10 clause markers (<em>that, what, whoever, why, how, whether, where, when, whose, whichever</em>).`);
+      } else {
+        recs.push(`<strong>7. Clause Boundary Practice (Activity 7 — ${s[7].pct}%):</strong> Use the <em>Listen to Sentence</em> button in Activity 7 to hear natural pauses right before the noun clause marker, then place the subject immediately after the marker.`);
+      }
+
+      // 8. Overall / Student Info & Next Step recommendation
+      const hasName = (document.getElementById('student-name').value || '').trim().length > 0;
+      if (!hasName) {
+        recs.push(`<strong>8. Complete Student Header &amp; Print Portfolio:</strong> Remember to type your full name in the Introduction section before printing your results report for Mr. Rocha.`);
+      } else {
+        recs.push(`<strong>8. Real-World Application for ${document.getElementById('student-name').value.trim()}:</strong> Write a short daily journal paragraph using at least 5 different noun clause markers (<em>what, whether, why, how, that</em>) and print this report for Mr. Rocha.`);
+      }
+
+      const listEl = document.getElementById('report-recommendations-list');
+      listEl.innerHTML = recs.map(r => `
+        <li class="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-amber-200/80 dark:border-slate-700 text-slate-800 dark:text-slate-200 leading-relaxed shadow-sm">
+          ${r}
+        </li>
+      `).join('');
+    }
+
+    function drawResultCharts() {
+      const isDark = document.documentElement.classList.contains('dark');
+      const textColor = isDark ? '#e2e8f0' : '#1e293b';
+      const gridColor = isDark ? 'rgba(148, 163, 184, 0.2)' : 'rgba(100, 116, 139, 0.2)';
+
+      // 1. Colorful Bar Chart
+      const barCanvas = document.getElementById('results-bar-chart');
+      const bCtx = barCanvas.getContext('2d');
+      const W = barCanvas.width;
+      const H = barCanvas.height;
+      bCtx.clearRect(0, 0, W, H);
+
+      const padLeft = 44;
+      const padRight = 18;
+      const padTop = 22;
+      const padBottom = 42;
+      const chartW = W - padLeft - padRight;
+      const chartH = H - padTop - padBottom;
+
+      // Grid lines (0%, 25%, 50%, 75%, 100%)
+      bCtx.font = 'bold 11px Inter, sans-serif';
+      bCtx.textAlign = 'right';
+      for (let pct = 0; pct <= 100; pct += 25) {
+        const y = padTop + chartH - (pct / 100) * chartH;
+        bCtx.strokeStyle = gridColor;
+        bCtx.lineWidth = 1;
+        bCtx.beginPath();
+        bCtx.moveTo(padLeft, y);
+        bCtx.lineTo(W - padRight, y);
+        bCtx.stroke();
+
+        bCtx.fillStyle = textColor;
+        bCtx.fillText(`${pct}%`, padLeft - 6, y + 4);
+      }
+
+      const barColors = ['#6366f1', '#a855f7', '#0ea5e9', '#f59e0b', '#ec4899', '#14b8a6', '#8b5cf6'];
+      const labels = ['Act 1', 'Act 2', 'Act 3', 'Act 4', 'Act 5', 'Act 6', 'Act 7'];
+      const slotW = chartW / 7;
+      const barW = Math.min(42, slotW * 0.62);
+
+      labels.forEach((lbl, idx) => {
+        const val = state.scores[idx + 1].pct;
+        const barH = (val / 100) * chartH;
+        const x = padLeft + idx * slotW + (slotW - barW) / 2;
+        const y = padTop + chartH - barH;
+
+        // Rounded top bar
+        bCtx.fillStyle = barColors[idx];
+        bCtx.beginPath();
+        const r = Math.min(8, barH / 2);
+        if (barH > 0) {
+          bCtx.moveTo(x, y + barH);
+          bCtx.lineTo(x, y + r);
+          bCtx.quadraticCurveTo(x, y, x + r, y);
+          bCtx.lineTo(x + barW - r, y);
+          bCtx.quadraticCurveTo(x + barW, y, x + barW, y + r);
+          bCtx.lineTo(x + barW, y + barH);
+          bCtx.closePath();
+          bCtx.fill();
+        }
+
+        // Value above bar
+        bCtx.fillStyle = textColor;
+        bCtx.textAlign = 'center';
+        bCtx.font = 'bold 11px Inter, sans-serif';
+        bCtx.fillText(`${val}%`, x + barW / 2, Math.max(14, y - 6));
+
+        // X-axis label
+        bCtx.fillText(lbl, x + barW / 2, H - 16);
+      });
+
+      // 2. Colorful Doughnut Chart
+      const dCanvas = document.getElementById('results-donut-chart');
+      const dCtx = dCanvas.getContext('2d');
+      const dW = dCanvas.width;
+      const dH = dCanvas.height;
+      dCtx.clearRect(0, 0, dW, dH);
+
+      const overallPct = Math.round(
+        [1, 2, 3, 4, 5, 6, 7].reduce((acc, k) => acc + state.scores[k].pct, 0) / 7
+      );
+      const remainingPct = 100 - overallPct;
+
+      const cx = dW / 2;
+      const cy = dH / 2 - 8;
+      const radius = 68;
+      const innerRadius = 42;
+
+      // Earned slice
+      const startAngle = -Math.PI / 2;
+      const earnedAngle = startAngle + (overallPct / 100) * Math.PI * 2;
+
+      dCtx.beginPath();
+      dCtx.arc(cx, cy, radius, startAngle, earnedAngle);
+      dCtx.arc(cx, cy, innerRadius, earnedAngle, startAngle, true);
+      dCtx.closePath();
+      dCtx.fillStyle = '#10b981';
+      dCtx.fill();
+
+      // Remaining slice
+      if (remainingPct > 0) {
+        dCtx.beginPath();
+        dCtx.arc(cx, cy, radius, earnedAngle, startAngle + Math.PI * 2);
+        dCtx.arc(cx, cy, innerRadius, startAngle + Math.PI * 2, earnedAngle, true);
+        dCtx.closePath();
+        dCtx.fillStyle = isDark ? '#334155' : '#cbd5e1';
+        dCtx.fill();
+      }
+
+      // Center percentage text
+      dCtx.fillStyle = textColor;
+      dCtx.textAlign = 'center';
+      dCtx.font = '800 20px Inter, sans-serif';
+      dCtx.fillText(`${overallPct}%`, cx, cy + 7);
+
+      // Legend at bottom
+      dCtx.font = 'bold 11px Inter, sans-serif';
+      dCtx.fillStyle = '#10b981';
+      dCtx.fillRect(28, dH - 22, 12, 12);
+      dCtx.fillStyle = textColor;
+      dCtx.textAlign = 'left';
+      dCtx.fillText(`Mastered (${overallPct}%)`, 44, dH - 12);
+
+      dCtx.fillStyle = isDark ? '#475569' : '#94a3b8';
+      dCtx.fillRect(142, dH - 22, 12, 12);
+      dCtx.fillStyle = textColor;
+      dCtx.fillText(`To Review (${remainingPct}%)`, 158, dH - 12);
+    }
+
+    function printResults() {
+      // Ensure results section is visible and scroll to top so printing starts at top of page
+      if (document.getElementById('results-section').classList.contains('hidden')) {
+        submitWorksheet();
+      }
+      window.scrollTo(0, 0);
+      setTimeout(() => {
+        window.print();
+      }, 150);
+    }
+  </script>
+</body>
+</html>
